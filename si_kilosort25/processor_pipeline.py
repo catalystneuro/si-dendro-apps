@@ -14,7 +14,7 @@ class PipelineProcessor(ProcessorBase):
     @staticmethod
     def run(context: PipelineContext):
 
-        # TODO - create SI recording from InputFile
+        # Create SI recording from InputFile
         input = context.input_file
         recording = NwbRecording(
             file=input.get_h5py_file(),
@@ -31,6 +31,7 @@ class PipelineProcessor(ProcessorBase):
             # run_preprocessing=context.run_preprocessing,
         )
 
+        # TODO - upload output file
         # print('Writing output NWB file')
         # with pynwb.NWBHDF5IO(file=f, mode='r', load_namespaces=True) as io:
         #     nwbfile_rec = io.read()
