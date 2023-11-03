@@ -1,2 +1,3 @@
 spikeinterface[full]==0.98.2
+# spikeinterface_pipelines
 # dendro
