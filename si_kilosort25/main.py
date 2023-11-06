@@ -8,7 +8,7 @@ app_name = 'si_kilosort25'
 app = pr.App(
     name=app_name,
     help="Spike Interface Pipeline - Kilosort2.5",
-    app_image=f"magland/{app_name}",
+    app_image=f"ghcr.io/catalystneuro/{app_name}",
     app_executable="/app/main.py"
 )
 

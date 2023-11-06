@@ -1,4 +1,8 @@
 from typing import Union, List
+from neuroconv.tools.spikeinterface import write_sorting
+from pynwb import NWBFile
+from pynwb.file import Subject
+from uuid import uuid4
 import numpy as np
 import h5py
 import spikeinterface as si
@@ -74,3 +78,32 @@ class NwbRecordingSegment(si.BaseRecordingSegment):
             return self._electrical_series_data[start_frame:end_frame, :]
         else:
             return self._electrical_series_data[start_frame:end_frame, channel_indices]
+
+
+def create_sorting_out_nwb_file(nwbfile_original: NWBFile, sorting: si.BaseSorting, sorting_out_fname: str):
+    nwbfile = NWBFile(
+        session_description=nwbfile_original.session_description + " - spike sorting results.",
+        identifier=str(uuid4()),
+        session_start_time=nwbfile_original.session_start_time,
+        session_id=nwbfile_original.session_id,
+        experimenter=nwbfile_original.experimenter,
+        lab=nwbfile_original.lab,
+        institution=nwbfile_original.institution,
+        experiment_description=nwbfile_original.experiment_description,
+        related_publications=nwbfile_original.related_publications,
+    )
+    subject = Subject(
+        subject_id=nwbfile_original.subject.subject_id,
+        age=nwbfile_original.subject.age,
+        description=nwbfile_original.subject.description,
+        species=nwbfile_original.subject.species,
+        sex=nwbfile_original.subject.sex,
+    )
+    nwbfile.subject = subject
+
+    write_sorting(
+        sorting=sorting,
+        nwbfile=nwbfile,
+        nwbfile_path=sorting_out_fname,
+        overwrite=True
+    )
