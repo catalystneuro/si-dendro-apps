@@ -1,0 +1,318 @@
+{
+    "name": "si_kilosort25",
+    "description": "Spike Interface Pipeline - Kilosort2.5",
+    "appImage": "ghcr.io/catalystneuro/si_kilosort25",
+    "appExecutable": "/app/main.py",
+    "executable": "/app/main.py",
+    "processors": [
+        {
+            "name": "spikeinterface_pipeline",
+            "description": "SpikeInterface Pipeline Processor",
+            "label": "SpikeInterface Pipeline",
+            "inputs": [
+                {
+                    "name": "input",
+                    "description": ""
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "output",
+                    "description": ""
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "recording_context.electrical_series_path",
+                    "description": "",
+                    "type": "str",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.highpass_filter.freq_min",
+                    "description": "",
+                    "type": "float",
+                    "default": 300.0
+                },
+                {
+                    "name": "preprocessing_context.highpass_filter.margin_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.phase_shift.margin_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "coherence+psd"
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.dead_channel_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": -0.5
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.noisy_channel_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 1.0
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.outside_channel_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": -0.3
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.n_neighbors",
+                    "description": "",
+                    "type": "int",
+                    "default": 11
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.seed",
+                    "description": "",
+                    "type": "int",
+                    "default": 0
+                },
+                {
+                    "name": "preprocessing_context.common_reference.reference",
+                    "description": "",
+                    "type": "str",
+                    "default": "global"
+                },
+                {
+                    "name": "preprocessing_context.common_reference.operator",
+                    "description": "",
+                    "type": "str",
+                    "default": "median"
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.n_channel_pad",
+                    "description": "",
+                    "type": "int",
+                    "default": 60
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.n_channel_taper",
+                    "description": "",
+                    "type": "int",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.direction",
+                    "description": "",
+                    "type": "str",
+                    "default": "y"
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.apply_agc",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.agc_window_length_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.01
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.highpass_butter_order",
+                    "description": "",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.highpass_butter_wn",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.01
+                },
+                {
+                    "name": "preprocessing_context.preprocessing_strategy",
+                    "description": "",
+                    "type": "str",
+                    "default": "cmr"
+                },
+                {
+                    "name": "preprocessing_context.remove_out_channels",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.remove_bad_channels",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.max_bad_channel_fraction_to_remove",
+                    "description": "",
+                    "type": "float",
+                    "default": 1.1
+                },
+                {
+                    "name": "sorting_context.sorter_name",
+                    "description": "",
+                    "type": "str",
+                    "default": "kilosort2_5"
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.detect_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 6
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.projection_threshold",
+                    "description": "",
+                    "type": "List[int]",
+                    "default": [
+                        10,
+                        4
+                    ]
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.preclust_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 8
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.car",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.minFR",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.minfr_goodchannels",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.nblocks",
+                    "description": "",
+                    "type": "int",
+                    "default": 5
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.sig",
+                    "description": "",
+                    "type": "float",
+                    "default": 20
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.freq_min",
+                    "description": "",
+                    "type": "float",
+                    "default": 150
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.sigmaMask",
+                    "description": "",
+                    "type": "float",
+                    "default": 30
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.nPCs",
+                    "description": "",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.ntbuff",
+                    "description": "",
+                    "type": "int",
+                    "default": 64
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.nfilt_factor",
+                    "description": "",
+                    "type": "int",
+                    "default": 4
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.NT",
+                    "description": "",
+                    "type": "int",
+                    "default": -1
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.AUCsplit",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.9
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.do_correction",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.wave_length",
+                    "description": "",
+                    "type": "float",
+                    "default": 61
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.keep_good_only",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.skip_kilosort_preprocessing",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "sorting_context.sorter_kwargs.scaleproc",
+                    "description": "",
+                    "type": "int",
+                    "default": -1
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "wip",
+                    "value": true
+                }
+            ],
+            "tags": [
+                {
+                    "tag": "spike_interface"
+                },
+                {
+                    "tag": "electrophysiology"
+                },
+                {
+                    "tag": "preprocessing"
+                },
+                {
+                    "tag": "sorting"
+                },
+                {
+                    "tag": "postprocessing"
+                }
+            ]
+        }
+    ]
+}

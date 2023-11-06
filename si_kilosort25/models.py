@@ -63,7 +63,7 @@ class PreprocessingContext(BaseModel):
 # ------------------------------
 class Kilosort25SortingContext(BaseModel):
     detect_threshold: float = Field(default=6, description="Threshold for spike detection")
-    projection_threshold: List = Field(default=[10, 4], description="Threshold on projections")
+    projection_threshold: List[int] = Field(default=[10, 4], description="Threshold on projections")
     preclust_threshold: float = Field(default=8, description="Threshold crossings for pre-clustering (in PCA projection space)")
     car: bool = Field(default=True, description="Enable or disable common reference")
     minFR: float = Field(default=0.1, description="Minimum spike rate (Hz), if a cluster falls below this for too long it gets removed")
