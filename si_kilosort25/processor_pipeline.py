@@ -11,7 +11,7 @@ class PipelineProcessor(ProcessorBase):
     name = 'spikeinterface_pipeline'
     label = 'SpikeInterface Pipeline'
     description = "SpikeInterface Pipeline Processor"
-    tags = ['spike_interface', 'electrophysiology', 'preprocessing', 'sorting', 'postprocessing']
+    tags = ['spike_interface', 'electrophysiology', 'preprocessing', 'spike_sorter', 'postprocessing']
     attributes = {
         'wip': True
     }

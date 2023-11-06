@@ -307,7 +307,7 @@
                     "tag": "preprocessing"
                 },
                 {
-                    "tag": "sorting"
+                    "tag": "spike_sorter"
                 },
                 {
                     "tag": "postprocessing"
