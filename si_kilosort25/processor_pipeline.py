@@ -35,7 +35,7 @@ class PipelineProcessor(ProcessorBase):
 
         # TODO - upload output file
         print('Writing output NWB file')
-        with pynwb.NWBHDF5IO(file=f, mode='r', load_namespaces=True) as io:
+        with pynwb.NWBHDF5IO(file=input.get_h5py_file(), mode='r', load_namespaces=True) as io:
             nwbfile_rec = io.read()
 
             if not os.path.exists('output'):
