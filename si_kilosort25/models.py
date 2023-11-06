@@ -1,6 +1,6 @@
 from dendro.sdk import InputFile, OutputFile
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import List
 
 
 # ------------------------------
@@ -38,7 +38,7 @@ class CommonReference(BaseModel):
 
 class HighpassSpatialFilter(BaseModel):
     n_channel_pad: int = Field(default=60, description="Number of channels to pad")
-    n_channel_taper: Optional[int] = Field(default=None, description="Number of channels to taper")
+    n_channel_taper: int = Field(default=None, description="Number of channels to taper")
     direction: str = Field(default="y", description="Direction for the spatial filter")
     apply_agc: bool = Field(default=True, description="Whether to apply automatic gain control")
     agc_window_length_s: float = Field(default=0.01, description="Window length in seconds for AGC")
@@ -63,7 +63,7 @@ class PreprocessingContext(BaseModel):
 # ------------------------------
 class Kilosort25SortingContext(BaseModel):
     detect_threshold: float = Field(default=6, description="Threshold for spike detection")
-    projection_threshold: list = Field(default=[10, 4], description="Threshold on projections")
+    projection_threshold: List = Field(default=[10, 4], description="Threshold on projections")
     preclust_threshold: float = Field(default=8, description="Threshold crossings for pre-clustering (in PCA projection space)")
     car: bool = Field(default=True, description="Enable or disable common reference")
     minFR: float = Field(default=0.1, description="Minimum spike rate (Hz), if a cluster falls below this for too long it gets removed")

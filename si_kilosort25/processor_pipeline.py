@@ -3,15 +3,18 @@ from spikeinterface_pipelines import pipeline as si_pipeline
 import os
 import pynwb
 
-from .models import PipelineContext
-from .nwb_utils import NwbRecording, create_sorting_out_nwb_file
+from models import PipelineContext
+from nwb_utils import NwbRecording, create_sorting_out_nwb_file
 
 
 class PipelineProcessor(ProcessorBase):
     name = 'spikeinterface_pipeline'
     label = 'SpikeInterface Pipeline'
-    help = "SpikeInterface Pipeline Processor"
+    description = "SpikeInterface Pipeline Processor"
     tags = ['spike_interface', 'electrophysiology', 'preprocessing', 'sorting', 'postprocessing']
+    attributes = {
+        'wip': True
+    }
 
     @staticmethod
     def run(context: PipelineContext):

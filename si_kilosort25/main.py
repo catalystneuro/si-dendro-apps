@@ -1,13 +1,13 @@
-import dendro.sdk as pr
+from dendro.sdk import App
 
-from .processor_pipeline import PipelineProcessor
+from processor_pipeline import PipelineProcessor
 
 
 app_name = 'si_kilosort25'
 
-app = pr.App(
+app = App(
     name=app_name,
-    help="Spike Interface Pipeline - Kilosort2.5",
+    description="Spike Interface Pipeline - Kilosort2.5",
     app_image=f"ghcr.io/catalystneuro/{app_name}",
     app_executable="/app/main.py"
 )
