@@ -8,10 +8,10 @@ from nwb_utils import NwbRecording, create_sorting_out_nwb_file
 
 
 class PipelineProcessor(ProcessorBase):
-    name = 'spikeinterface_pipeline'
-    label = 'SpikeInterface Pipeline'
-    description = "SpikeInterface Pipeline Processor"
-    tags = ['spike_interface', 'electrophysiology', 'preprocessing', 'spike_sorter', 'postprocessing']
+    name = 'spikeinterface_pipeline_ks25'
+    label = 'SpikeInterface Pipeline - Kilosort 2.5'
+    description = "SpikeInterface Pipeline Processor for Kilosort 2.5"
+    tags = ['spike_sorting', 'spike_interface', 'electrophysiology', 'pipeline']
     attributes = {
         'wip': True
     }
