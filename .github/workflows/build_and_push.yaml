@@ -1,0 +1,42 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+        - dev
+    paths:
+        - 'app_*/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app_dir:
+          - si_kilosort25
+          - si_kilosort3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Builder
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        #   username: YOUR_GITHUB_USERNAME # Replace with your GitHub username
+        #   password: ${{ secrets.GHCR_PAT }} # Use the PAT secret
+
+      - name: Generate Spec File and Build Docker Image
+        if: contains(github.event.head_commit.modified, matrix.app_dir)
+        run: |
+          cd ${{ matrix.app_dir }}
+          dendro make-app-spec-file --app-dir . --spec-output-file spec.json
+          docker build -t ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest .
+          docker push ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest
