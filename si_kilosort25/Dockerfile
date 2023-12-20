@@ -6,6 +6,12 @@ RUN git clone https://github.com/flatironinstitute/dendro.git && \
     cd dendro/python && \
     pip install -e .
 
+# Install spikeinterface-pipelines from source, for now
+RUN git clone https://github.com/SpikeInterface/spikeinterface_pipelines.git && \
+    cd spikeinterface_pipelines && \
+    git checkout dev && \
+    pip install -e .
+
 # Copy files into the container
 WORKDIR /app
 COPY *.py ./

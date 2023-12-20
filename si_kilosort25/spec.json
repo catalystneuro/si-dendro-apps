@@ -1,180 +1,179 @@
 {
     "name": "si_kilosort25",
     "description": "Spike Interface Pipeline - Kilosort2.5",
-    "appImage": "ghcr.io/catalystneuro/si_kilosort25",
+    "appImage": "ghcr.io/catalystneuro/dendro_si_kilosort25",
     "appExecutable": "/app/main.py",
     "executable": "/app/main.py",
     "processors": [
         {
-            "name": "spikeinterface_pipeline",
-            "description": "SpikeInterface Pipeline Processor",
-            "label": "SpikeInterface Pipeline",
+            "name": "spikeinterface_pipeline_ks25",
+            "description": "SpikeInterface Pipeline Processor for Kilosort 2.5",
+            "label": "SpikeInterface Pipeline - Kilosort 2.5",
             "inputs": [
                 {
                     "name": "input",
-                    "description": ""
+                    "description": "Input NWB file"
                 }
             ],
             "outputs": [
                 {
                     "name": "output",
-                    "description": ""
+                    "description": "Output NWB file"
                 }
             ],
             "parameters": [
                 {
                     "name": "recording_context.electrical_series_path",
-                    "description": "",
-                    "type": "str",
-                    "default": null
+                    "description": "Path to the electrical series in the NWB file",
+                    "type": "str"
                 },
                 {
                     "name": "preprocessing_context.highpass_filter.freq_min",
-                    "description": "",
+                    "description": "Minimum frequency for the highpass filter",
                     "type": "float",
                     "default": 300.0
                 },
                 {
                     "name": "preprocessing_context.highpass_filter.margin_ms",
-                    "description": "",
+                    "description": "Margin in milliseconds",
                     "type": "float",
                     "default": 5.0
                 },
                 {
                     "name": "preprocessing_context.phase_shift.margin_ms",
-                    "description": "",
+                    "description": "Margin in milliseconds for phase shift",
                     "type": "float",
                     "default": 100.0
                 },
                 {
                     "name": "preprocessing_context.detect_bad_channels.method",
-                    "description": "",
+                    "description": "Method to detect bad channels",
                     "type": "str",
                     "default": "coherence+psd"
                 },
                 {
                     "name": "preprocessing_context.detect_bad_channels.dead_channel_threshold",
-                    "description": "",
+                    "description": "Threshold for dead channel",
                     "type": "float",
                     "default": -0.5
                 },
                 {
                     "name": "preprocessing_context.detect_bad_channels.noisy_channel_threshold",
-                    "description": "",
+                    "description": "Threshold for noisy channel",
                     "type": "float",
                     "default": 1.0
                 },
                 {
                     "name": "preprocessing_context.detect_bad_channels.outside_channel_threshold",
-                    "description": "",
+                    "description": "Threshold for outside channel",
                     "type": "float",
                     "default": -0.3
                 },
                 {
                     "name": "preprocessing_context.detect_bad_channels.n_neighbors",
-                    "description": "",
+                    "description": "Number of neighbors",
                     "type": "int",
                     "default": 11
                 },
                 {
                     "name": "preprocessing_context.detect_bad_channels.seed",
-                    "description": "",
+                    "description": "Seed value",
                     "type": "int",
                     "default": 0
                 },
                 {
                     "name": "preprocessing_context.common_reference.reference",
-                    "description": "",
+                    "description": "Type of reference",
                     "type": "str",
                     "default": "global"
                 },
                 {
                     "name": "preprocessing_context.common_reference.operator",
-                    "description": "",
+                    "description": "Operator used for common reference",
                     "type": "str",
                     "default": "median"
                 },
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.n_channel_pad",
-                    "description": "",
+                    "description": "Number of channels to pad",
                     "type": "int",
                     "default": 60
                 },
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.n_channel_taper",
-                    "description": "",
+                    "description": "Number of channels to taper",
                     "type": "int",
                     "default": null
                 },
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.direction",
-                    "description": "",
+                    "description": "Direction for the spatial filter",
                     "type": "str",
                     "default": "y"
                 },
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.apply_agc",
-                    "description": "",
+                    "description": "Whether to apply automatic gain control",
                     "type": "bool",
                     "default": true
                 },
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.agc_window_length_s",
-                    "description": "",
+                    "description": "Window length in seconds for AGC",
                     "type": "float",
                     "default": 0.01
                 },
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.highpass_butter_order",
-                    "description": "",
+                    "description": "Order for the Butterworth filter",
                     "type": "int",
                     "default": 3
                 },
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.highpass_butter_wn",
-                    "description": "",
+                    "description": "Natural frequency for the Butterworth filter",
                     "type": "float",
                     "default": 0.01
                 },
                 {
                     "name": "preprocessing_context.preprocessing_strategy",
-                    "description": "",
+                    "description": "Strategy for preprocessing",
                     "type": "str",
                     "default": "cmr"
                 },
                 {
                     "name": "preprocessing_context.remove_out_channels",
-                    "description": "",
+                    "description": "Flag to remove out channels",
                     "type": "bool",
                     "default": false
                 },
                 {
                     "name": "preprocessing_context.remove_bad_channels",
-                    "description": "",
+                    "description": "Flag to remove bad channels",
                     "type": "bool",
                     "default": false
                 },
                 {
                     "name": "preprocessing_context.max_bad_channel_fraction_to_remove",
-                    "description": "",
+                    "description": "Maximum fraction of bad channels to remove",
                     "type": "float",
                     "default": 1.1
                 },
                 {
                     "name": "sorting_context.sorter_name",
-                    "description": "",
+                    "description": "Name of the sorter to use.",
                     "type": "str",
                     "default": "kilosort2_5"
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.detect_threshold",
-                    "description": "",
+                    "description": "Threshold for spike detection",
                     "type": "float",
                     "default": 6
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.projection_threshold",
-                    "description": "",
+                    "description": "Threshold on projections",
                     "type": "List[int]",
                     "default": [
                         10,
@@ -183,109 +182,109 @@
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.preclust_threshold",
-                    "description": "",
+                    "description": "Threshold crossings for pre-clustering (in PCA projection space)",
                     "type": "float",
                     "default": 8
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.car",
-                    "description": "",
+                    "description": "Enable or disable common reference",
                     "type": "bool",
                     "default": true
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.minFR",
-                    "description": "",
+                    "description": "Minimum spike rate (Hz), if a cluster falls below this for too long it gets removed",
                     "type": "float",
                     "default": 0.1
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.minfr_goodchannels",
-                    "description": "",
+                    "description": "Minimum firing rate on a 'good' channel",
                     "type": "float",
                     "default": 0.1
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.nblocks",
-                    "description": "",
+                    "description": "blocks for registration. 0 turns it off, 1 does rigid registration. Replaces 'datashift' option.",
                     "type": "int",
                     "default": 5
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.sig",
-                    "description": "",
+                    "description": "spatial smoothness constant for registration",
                     "type": "float",
                     "default": 20
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.freq_min",
-                    "description": "",
+                    "description": "High-pass filter cutoff frequency",
                     "type": "float",
                     "default": 150
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.sigmaMask",
-                    "description": "",
+                    "description": "Spatial constant in um for computing residual variance of spike",
                     "type": "float",
                     "default": 30
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.nPCs",
-                    "description": "",
+                    "description": "Number of PCA dimensions",
                     "type": "int",
                     "default": 3
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.ntbuff",
-                    "description": "",
+                    "description": "Samples of symmetrical buffer for whitening and spike detection",
                     "type": "int",
                     "default": 64
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.nfilt_factor",
-                    "description": "",
+                    "description": "Max number of clusters per good channel (even temporary ones) 4",
                     "type": "int",
                     "default": 4
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.NT",
-                    "description": "",
+                    "description": "Batch size (if -1 it is automatically computed)",
                     "type": "int",
                     "default": -1
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.AUCsplit",
-                    "description": "",
+                    "description": "Threshold on the area under the curve (AUC) criterion for performing a split in the final step",
                     "type": "float",
                     "default": 0.9
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.do_correction",
-                    "description": "",
+                    "description": "If True drift registration is applied",
                     "type": "bool",
                     "default": true
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.wave_length",
-                    "description": "",
+                    "description": "size of the waveform extracted around each detected peak, (Default 61, maximum 81)",
                     "type": "float",
                     "default": 61
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.keep_good_only",
-                    "description": "",
+                    "description": "If True only 'good' units are returned",
                     "type": "bool",
                     "default": true
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.skip_kilosort_preprocessing",
-                    "description": "",
+                    "description": "Can optionaly skip the internal kilosort preprocessing",
                     "type": "bool",
                     "default": false
                 },
                 {
                     "name": "sorting_context.sorter_kwargs.scaleproc",
-                    "description": "",
+                    "description": "int16 scaling of whitened data, if -1 set to 200.",
                     "type": "int",
                     "default": -1
                 }
@@ -298,19 +297,16 @@
             ],
             "tags": [
                 {
+                    "tag": "spike_sorting"
+                },
+                {
                     "tag": "spike_interface"
                 },
                 {
                     "tag": "electrophysiology"
                 },
                 {
-                    "tag": "preprocessing"
-                },
-                {
-                    "tag": "spike_sorter"
-                },
-                {
-                    "tag": "postprocessing"
+                    "tag": "pipeline"
                 }
             ]
         }
