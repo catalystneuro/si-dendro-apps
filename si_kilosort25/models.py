@@ -47,12 +47,12 @@ class HighpassSpatialFilter(BaseModel):
 
 
 class PreprocessingContext(BaseModel):
+    preprocessing_strategy: str = Field(default="cmr", description="Strategy for preprocessing")
     highpass_filter: HighpassFilter = Field(default=HighpassFilter(), description="Highpass filter")
     phase_shift: PhaseShift = Field(default=PhaseShift(), description="Phase shift")
     detect_bad_channels: DetectBadChannels = Field(default=DetectBadChannels(), description="Detect bad channels")
     common_reference: CommonReference = Field(default=CommonReference(), description="Common reference")
     highpass_spatial_filter: HighpassSpatialFilter = Field(default=HighpassSpatialFilter(), description="Highpass spatial filter")
-    preprocessing_strategy: str = Field(default="cmr", description="Strategy for preprocessing")
     remove_out_channels: bool = Field(default=False, description="Flag to remove out channels")
     remove_bad_channels: bool = Field(default=False, description="Flag to remove bad channels")
     max_bad_channel_fraction_to_remove: float = Field(default=1.1, description="Maximum fraction of bad channels to remove")
@@ -109,11 +109,12 @@ class CurationContext(BaseModel):
 class PipelineContext(BaseModel):
     input: InputFile = Field(description='Input NWB file')
     output: OutputFile = Field(description='Output NWB file')
+    lazy_read_input: bool = Field(default=True, description='Lazy read input file')
     recording_context: RecordingContext = Field(description='Recording context')
-    preprocessing_context: PreprocessingContext = Field(description='Preprocessing context')
-    sorting_context: SortingContext = Field(description='Sorting context')
-    postprocessing_context: PostprocessingContext = Field(description='Postprocessing context')
-    curation_context: CurationContext = Field(description='Curation context')
+    preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext(), description='Preprocessing context')
+    sorting_context: SortingContext = Field(default=SortingContext(), description='Sorting context')
+    # postprocessing_context: PostprocessingContext = Field(default=PostprocessingContext(), description='Postprocessing context')
+    # curation_context: CurationContext = Field(default=CurationContext(), description='Curation context')
 
 
 # # ------------------------------

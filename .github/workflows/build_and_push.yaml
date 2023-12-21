@@ -34,7 +34,7 @@ jobs:
         #   password: ${{ secrets.GHCR_PAT }} # Use the PAT secret
 
       - name: Generate Spec File and Build Docker Image
-        if: contains(github.event.head_commit.modified, matrix.app_dir)
+        # if: contains(github.event.head_commit.modified, matrix.app_dir)
         run: |
           cd ${{ matrix.app_dir }}
           dendro make-app-spec-file --app-dir . --spec-output-file spec.json

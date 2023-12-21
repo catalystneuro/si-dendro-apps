@@ -2,6 +2,7 @@ from dendro.sdk import ProcessorBase
 from spikeinterface_pipelines import pipeline as si_pipeline
 import os
 import pynwb
+import h5py
 
 from models import PipelineContext
 from nwb_utils import NwbRecording, create_sorting_out_nwb_file
@@ -20,25 +21,44 @@ class PipelineProcessor(ProcessorBase):
     def run(context: PipelineContext):
 
         # Create SI recording from InputFile
-        input = context.input_file
+        # input = context.input
+        # recording = NwbRecording(
+        #     file=input.get_h5py_file(),
+        #     electrical_series_path=context.recording_context.electrical_series_path
+        # )
+        print('Opening remote input file')
+        download = not context.lazy_read_input
+        ff = context.input.get_file(download=download)
+
+        print('Creating input recording')
         recording = NwbRecording(
-            file=input.get_h5py_file(),
+            file=ff,
             electrical_series_path=context.recording_context.electrical_series_path
         )
 
         # TODO - run pipeline
-        _, sorting = si_pipeline.pipeline(
+        job_kwargs = {
+            'n_jobs': -1,
+            'chunk_duration': '1s',
+            'progress_bar': False
+        }
+        print('Running pipeline')
+        _, sorting, _ = si_pipeline.run_pipeline(
             recording=recording,
-            results_path="./results/",
-            preprocessing_params=context.preprocessing_params,
-            sorting_params=context.sorting_context,
+            scratch_folder="./scratch/",
+            results_folder="./results/",
+            job_kwargs=job_kwargs,
+            preprocessing_params=context.preprocessing_context.model_dump(),
+            spikesorting_params=context.sorting_context.model_dump(),
             # postprocessing_params=context.postprocessing_params,
             # run_preprocessing=context.run_preprocessing,
         )
 
         # TODO - upload output file
         print('Writing output NWB file')
-        with pynwb.NWBHDF5IO(file=input.get_h5py_file(), mode='r', load_namespaces=True) as io:
+        h5_file = h5py.File(ff, 'r')
+        with pynwb.NWBHDF5IO(file=h5_file, mode='r', load_namespaces=True) as io:
+        # with pynwb.NWBHDF5IO(file=input.get_h5py_file(), mode='r', load_namespaces=True) as io:
             nwbfile_rec = io.read()
 
             if not os.path.exists('output'):
@@ -46,7 +66,7 @@ class PipelineProcessor(ProcessorBase):
             sorting_out_fname = 'output/sorting.nwb'
 
             create_sorting_out_nwb_file(
-                nwbfile_rec=nwbfile_rec,
+                nwbfile_original=nwbfile_rec,
                 sorting=sorting,
                 sorting_out_fname=sorting_out_fname
             )

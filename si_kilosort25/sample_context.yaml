@@ -1,0 +1,7 @@
+input:
+  url: https://filesamples.com/samples/document/txt/sample3.txt
+output:
+  output_file_name: output/sorting.nwb
+lazy_read_input: true
+recording_context:
+  electrical_series_path: /acquisition/timeseries
