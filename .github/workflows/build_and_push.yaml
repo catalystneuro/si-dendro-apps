@@ -47,3 +47,16 @@ jobs:
           dendro make-app-spec-file --app-dir . --spec-output-file spec.json
           docker build -t ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest .
           docker push ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest
+
+      - name: Commit files
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          GIT_STATUS=$(git status -s)
+          [[ ! -z "$GIT_STATUS" ]] && git add ${{ matrix.app_dir }}/spec.json && git commit -m "update spec.json" -a || echo "No changes to commit"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
