@@ -1,5 +1,6 @@
 from dendro.sdk import ProcessorBase
 from spikeinterface_pipelines import pipeline as si_pipeline
+from spikeinterface.extractors import NwbRecordingExtractor
 import os
 import pynwb
 import h5py
@@ -31,10 +32,19 @@ class PipelineProcessor(ProcessorBase):
         ff = context.input.get_file(download=download)
 
         print('Creating input recording')
-        recording = NwbRecording(
+        recording = NwbRecordingExtractor(
             file=ff,
-            electrical_series_path=context.recording_context.electrical_series_path
+            electrical_series_location=context.recording_context.electrical_series_path,
+            # file_path=context.input.get_url(),
+            # stream_mode="remfile"
         )
+
+        ############### FOR TESTING -- REMOVE LATER  ############
+        print(recording)
+
+        from spikeinterface.sorters import Kilosort2_5Sorter
+        Kilosort2_5Sorter.set_kilosort2_5_path(kilosort2_5_path="/mnt/shared_storage/Github/Kilosort")
+        #######################################################
 
         # TODO - run pipeline
         job_kwargs = {
