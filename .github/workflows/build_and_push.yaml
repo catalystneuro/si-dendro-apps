@@ -37,9 +37,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           git clone https://github.com/flatironinstitute/dendro.git
+          cd dendro/python
           git checkout issue-112
           git pull
-          cd dendro/python
           pip install .
 
       - name: Generate Spec File and Build Docker Image
