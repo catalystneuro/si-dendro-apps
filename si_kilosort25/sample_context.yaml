@@ -1,7 +1,0 @@
-input:
-  local_file_name: /mnt/shared_storage/taufferconsulting/client_catalystneuro/project_jaz/stub_test.nwb
-output:
-  output_file_name: output/sorting.nwb
-lazy_read_input: true
-recording_context:
-  electrical_series_path: /acquisition/ElectricalSeriesAP

@@ -1,3 +1,4 @@
-spikeinterface[full]==0.99.1
+pynwb
+# spikeinterface[full]==0.99.1
 # spikeinterface_pipelines
 # dendro

@@ -1,4 +1,4 @@
-input: https://dandi-api-staging-dandisets.s3.amazonaws.com/blobs/1ed/41e/1ed41e35-8445-4608-b327-b30f74388bea
+input: https://dandi-api-staging-dandisets.s3.amazonaws.com/blobs/3c7/8e6/3c78e6c9-d196-4bea-a7ce-494a315789be
 output: ./output/sorting.nwb
 lazy_read_input: true
 stub_test: false

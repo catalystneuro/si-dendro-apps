@@ -110,6 +110,7 @@ class PipelineContext(BaseModel):
     input: InputFile = Field(description='Input NWB file')
     output: OutputFile = Field(description='Output NWB file')
     lazy_read_input: bool = Field(default=True, description='Lazy read input file')
+    stub_test: bool = Field(default=False, description='Stub test')
     recording_context: RecordingContext = Field(description='Recording context')
     preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext(), description='Preprocessing context')
     sorting_context: SortingContext = Field(default=SortingContext(), description='Sorting context')

@@ -4,9 +4,14 @@ from spikeinterface.extractors import NwbRecordingExtractor
 import os
 import pynwb
 import h5py
+import logging
 
 from models import PipelineContext
-from nwb_utils import NwbRecording, create_sorting_out_nwb_file
+from nwb_utils import create_sorting_out_nwb_file
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class PipelineProcessor(ProcessorBase):
@@ -22,16 +27,11 @@ class PipelineProcessor(ProcessorBase):
     def run(context: PipelineContext):
 
         # Create SI recording from InputFile
-        # input = context.input
-        # recording = NwbRecording(
-        #     file=input.get_h5py_file(),
-        #     electrical_series_path=context.recording_context.electrical_series_path
-        # )
-        print('Opening remote input file')
+        logger.info('Opening remote input file')
         download = not context.lazy_read_input
         ff = context.input.get_file(download=download)
 
-        print('Creating input recording')
+        logger.info('Creating input recording')
         recording = NwbRecordingExtractor(
             file=ff,
             electrical_series_location=context.recording_context.electrical_series_path,
@@ -39,11 +39,15 @@ class PipelineProcessor(ProcessorBase):
             # stream_mode="remfile"
         )
 
+        if context.stub_test:
+            n_frames = int(min(3_000_000, recording.get_num_frames()))
+            recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
+
         ############### FOR TESTING -- REMOVE LATER  ############
         print(recording)
 
-        from spikeinterface.sorters import Kilosort2_5Sorter
-        Kilosort2_5Sorter.set_kilosort2_5_path(kilosort2_5_path="/mnt/shared_storage/Github/Kilosort")
+        # from spikeinterface.sorters import Kilosort2_5Sorter
+        # Kilosort2_5Sorter.set_kilosort2_5_path(kilosort2_5_path="/mnt/shared_storage/Github/Kilosort")
         #######################################################
 
         # TODO - run pipeline
@@ -52,7 +56,7 @@ class PipelineProcessor(ProcessorBase):
             'chunk_duration': '1s',
             'progress_bar': False
         }
-        print('Running pipeline')
+        logger.info('Running pipeline')
         _, sorting, _ = si_pipeline.run_pipeline(
             recording=recording,
             scratch_folder="./scratch/",
@@ -65,7 +69,7 @@ class PipelineProcessor(ProcessorBase):
         )
 
         # TODO - upload output file
-        print('Writing output NWB file')
+        logger.info('Writing output NWB file')
         h5_file = h5py.File(ff, 'r')
         with pynwb.NWBHDF5IO(file=h5_file, mode='r', load_namespaces=True) as io:
         # with pynwb.NWBHDF5IO(file=input.get_h5py_file(), mode='r', load_namespaces=True) as io:
@@ -81,5 +85,5 @@ class PipelineProcessor(ProcessorBase):
                 sorting_out_fname=sorting_out_fname
             )
 
-        print('Uploading output NWB file')
+        logger.info('Uploading output NWB file')
         context.output.set(sorting_out_fname)
