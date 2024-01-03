@@ -44,7 +44,7 @@ class PipelineProcessor(ProcessorBase):
             recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
 
         ############### FOR TESTING -- REMOVE LATER  ############
-        print(recording)
+        logger.info(recording)
 
         # from spikeinterface.sorters import Kilosort2_5Sorter
         # Kilosort2_5Sorter.set_kilosort2_5_path(kilosort2_5_path="/mnt/shared_storage/Github/Kilosort")
@@ -56,13 +56,16 @@ class PipelineProcessor(ProcessorBase):
             'chunk_duration': '1s',
             'progress_bar': False
         }
+        preprocessing_params = context.preprocessing_context.model_dump()
+        run_preprocessing = context.run_preprocessing
         logger.info('Running pipeline')
         _, sorting, _ = si_pipeline.run_pipeline(
             recording=recording,
             scratch_folder="./scratch/",
             results_folder="./results/",
             job_kwargs=job_kwargs,
-            preprocessing_params=context.preprocessing_context.model_dump(),
+            run_preprocessing=run_preprocessing,
+            preprocessing_params=preprocessing_params,
             spikesorting_params=context.sorting_context.model_dump(),
             # postprocessing_params=context.postprocessing_params,
             # run_preprocessing=context.run_preprocessing,

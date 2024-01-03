@@ -46,6 +46,12 @@ class HighpassSpatialFilter(BaseModel):
     highpass_butter_wn: float = Field(default=0.01, description="Natural frequency for the Butterworth filter")
 
 
+class MotionCorrection(BaseModel):
+    compute: bool = Field(default=True, description="Whether to compute motion correction")
+    apply: bool = Field(default=False, description="Whether to apply motion correction")
+    preset: str = Field(default="nonrigid_accurate", description="Preset for motion correction")
+
+
 class PreprocessingContext(BaseModel):
     preprocessing_strategy: str = Field(default="cmr", description="Strategy for preprocessing")
     highpass_filter: HighpassFilter = Field(default=HighpassFilter(), description="Highpass filter")
@@ -53,6 +59,7 @@ class PreprocessingContext(BaseModel):
     detect_bad_channels: DetectBadChannels = Field(default=DetectBadChannels(), description="Detect bad channels")
     common_reference: CommonReference = Field(default=CommonReference(), description="Common reference")
     highpass_spatial_filter: HighpassSpatialFilter = Field(default=HighpassSpatialFilter(), description="Highpass spatial filter")
+    motion_correction: MotionCorrection = Field(default=MotionCorrection(), description="Motion correction")
     remove_out_channels: bool = Field(default=False, description="Flag to remove out channels")
     remove_bad_channels: bool = Field(default=False, description="Flag to remove bad channels")
     max_bad_channel_fraction_to_remove: float = Field(default=1.1, description="Maximum fraction of bad channels to remove")
@@ -112,6 +119,7 @@ class PipelineContext(BaseModel):
     lazy_read_input: bool = Field(default=True, description='Lazy read input file')
     stub_test: bool = Field(default=False, description='Stub test')
     recording_context: RecordingContext = Field(description='Recording context')
+    run_preprocessing: bool = Field(default=True, description='Run preprocessing')
     preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext(), description='Preprocessing context')
     sorting_context: SortingContext = Field(default=SortingContext(), description='Sorting context')
     # postprocessing_context: PostprocessingContext = Field(default=PostprocessingContext(), description='Postprocessing context')
