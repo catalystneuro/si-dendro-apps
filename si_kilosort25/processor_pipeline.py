@@ -40,15 +40,11 @@ class PipelineProcessor(ProcessorBase):
         )
 
         if context.stub_test:
-            n_frames = int(min(3_000_000, recording.get_num_frames()))
+            logger.info('Running in stub test mode')
+            n_frames = int(min(300_000, recording.get_num_frames()))
             recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
 
-        ############### FOR TESTING -- REMOVE LATER  ############
         logger.info(recording)
-
-        # from spikeinterface.sorters import Kilosort2_5Sorter
-        # Kilosort2_5Sorter.set_kilosort2_5_path(kilosort2_5_path="/mnt/shared_storage/Github/Kilosort")
-        #######################################################
 
         # TODO - run pipeline
         job_kwargs = {
@@ -56,8 +52,16 @@ class PipelineProcessor(ProcessorBase):
             'chunk_duration': '1s',
             'progress_bar': False
         }
-        preprocessing_params = context.preprocessing_context.model_dump()
+
         run_preprocessing = context.run_preprocessing
+        preprocessing_params = context.preprocessing_context.model_dump()
+
+        run_spikesorting = context.run_spikesorting
+        spikesorting_params = context.spikesorting_context.model_dump()
+
+        run_postprocessing = context.run_postprocessing
+        # postprocessing_params = context.postprocessing_context.model_dump()
+
         logger.info('Running pipeline')
         _, sorting, _ = si_pipeline.run_pipeline(
             recording=recording,
@@ -66,9 +70,10 @@ class PipelineProcessor(ProcessorBase):
             job_kwargs=job_kwargs,
             run_preprocessing=run_preprocessing,
             preprocessing_params=preprocessing_params,
-            spikesorting_params=context.sorting_context.model_dump(),
-            # postprocessing_params=context.postprocessing_params,
-            # run_preprocessing=context.run_preprocessing,
+            run_spikesorting=run_spikesorting,
+            spikesorting_params=spikesorting_params,
+            run_postprocessing=run_postprocessing,
+            # postprocessing_params=postprocessing_params,
         )
 
         # TODO - upload output file
