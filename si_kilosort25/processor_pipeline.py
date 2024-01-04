@@ -94,4 +94,4 @@ class PipelineProcessor(ProcessorBase):
             )
 
         logger.info('Uploading output NWB file')
-        context.output.set(sorting_out_fname)
+        context.output.upload(sorting_out_fname)
