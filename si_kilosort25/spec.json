@@ -342,6 +342,9 @@
                     "tag": "spike_sorting"
                 },
                 {
+                    "tag": "spike_sorter"
+                },
+                {
                     "tag": "spike_interface"
                 },
                 {
