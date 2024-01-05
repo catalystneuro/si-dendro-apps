@@ -27,4 +27,4 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
 # Set the entrypoint
-ENTRYPOINT ["python", "main.py"]
+ENTRYPOINT ["python", "/app/main.py"]
