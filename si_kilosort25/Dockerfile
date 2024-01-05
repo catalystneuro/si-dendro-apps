@@ -26,5 +26,8 @@ COPY *.py ./
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
+# Give execution permission to /app/main.py
+RUN chmod +x /app/main.py
+
 # Set the entrypoint
-ENTRYPOINT ["python", "/app/main.py"]
+# ENTRYPOINT ["python", "/app/main.py"]
