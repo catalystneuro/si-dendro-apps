@@ -1,0 +1,6 @@
+input: https://dandi-api-staging-dandisets.s3.amazonaws.com/blobs/1ed/41e/1ed41e35-8445-4608-b327-b30f74388bea
+output: ./output/sorting.nwb
+lazy_read_input: true
+stub_test: false
+recording_context:
+  electrical_series_path: /acquisition/ElectricalSeriesRaw

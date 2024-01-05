@@ -46,13 +46,20 @@ class HighpassSpatialFilter(BaseModel):
     highpass_butter_wn: float = Field(default=0.01, description="Natural frequency for the Butterworth filter")
 
 
+class MotionCorrection(BaseModel):
+    compute: bool = Field(default=True, description="Whether to compute motion correction")
+    apply: bool = Field(default=False, description="Whether to apply motion correction")
+    preset: str = Field(default="nonrigid_accurate", description="Preset for motion correction")
+
+
 class PreprocessingContext(BaseModel):
+    preprocessing_strategy: str = Field(default="cmr", description="Strategy for preprocessing")
     highpass_filter: HighpassFilter = Field(default=HighpassFilter(), description="Highpass filter")
     phase_shift: PhaseShift = Field(default=PhaseShift(), description="Phase shift")
     detect_bad_channels: DetectBadChannels = Field(default=DetectBadChannels(), description="Detect bad channels")
     common_reference: CommonReference = Field(default=CommonReference(), description="Common reference")
     highpass_spatial_filter: HighpassSpatialFilter = Field(default=HighpassSpatialFilter(), description="Highpass spatial filter")
-    preprocessing_strategy: str = Field(default="cmr", description="Strategy for preprocessing")
+    motion_correction: MotionCorrection = Field(default=MotionCorrection(), description="Motion correction")
     remove_out_channels: bool = Field(default=False, description="Flag to remove out channels")
     remove_bad_channels: bool = Field(default=False, description="Flag to remove bad channels")
     max_bad_channel_fraction_to_remove: float = Field(default=1.1, description="Maximum fraction of bad channels to remove")
@@ -72,19 +79,20 @@ class Kilosort25SortingContext(BaseModel):
     sig: float = Field(default=20, description="spatial smoothness constant for registration")
     freq_min: float = Field(default=150, description="High-pass filter cutoff frequency")
     sigmaMask: float = Field(default=30, description="Spatial constant in um for computing residual variance of spike")
+    lam: float = Field(default=10.0, description="The importance of the amplitude penalty (like in Kilosort1: 0 means not used, 10 is average, 50 is a lot)")
     nPCs: int = Field(default=3, description="Number of PCA dimensions")
     ntbuff: int = Field(default=64, description="Samples of symmetrical buffer for whitening and spike detection")
     nfilt_factor: int = Field(default=4, description="Max number of clusters per good channel (even temporary ones) 4")
-    NT: int = Field(default=-1, description='Batch size (if -1 it is automatically computed)')
+    # NT: int = Field(default=-1, description='Batch size (if -1 it is automatically computed)')
     AUCsplit: float = Field(default=0.9, description="Threshold on the area under the curve (AUC) criterion for performing a split in the final step")
     do_correction: bool = Field(default=True, description="If True drift registration is applied")
     wave_length: float = Field(default=61, description="size of the waveform extracted around each detected peak, (Default 61, maximum 81)")
-    keep_good_only: bool = Field(default=True, description="If True only 'good' units are returned")
+    keep_good_only: bool = Field(default=False, description="If True only 'good' units are returned")
     skip_kilosort_preprocessing: bool = Field(default=False, description="Can optionaly skip the internal kilosort preprocessing")
-    scaleproc: int = Field(default=-1, description="int16 scaling of whitened data, if -1 set to 200.")
+    # scaleproc: int = Field(default=-1, description="int16 scaling of whitened data, if -1 set to 200.")
 
 
-class SortingContext(BaseModel):
+class SpikeSortingContext(BaseModel):
     sorter_name: str = Field(default="kilosort2_5", description="Name of the sorter to use.")
     sorter_kwargs: Kilosort25SortingContext = Field(default=Kilosort25SortingContext(), description="Sorter specific kwargs.")
 
@@ -109,11 +117,16 @@ class CurationContext(BaseModel):
 class PipelineContext(BaseModel):
     input: InputFile = Field(description='Input NWB file')
     output: OutputFile = Field(description='Output NWB file')
+    lazy_read_input: bool = Field(default=True, description='Lazy read input file')
+    stub_test: bool = Field(default=False, description='Stub test')
     recording_context: RecordingContext = Field(description='Recording context')
-    preprocessing_context: PreprocessingContext = Field(description='Preprocessing context')
-    sorting_context: SortingContext = Field(description='Sorting context')
-    postprocessing_context: PostprocessingContext = Field(description='Postprocessing context')
-    curation_context: CurationContext = Field(description='Curation context')
+    run_preprocessing: bool = Field(default=True, description='Run preprocessing')
+    preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext(), description='Preprocessing context')
+    run_spikesorting: bool = Field(default=True, description='Run spike sorting')
+    spikesorting_context: SpikeSortingContext = Field(default=SpikeSortingContext(), description='Sorting context')
+    run_postprocessing: bool = Field(default=True, description='Run postprocessing')
+    # postprocessing_context: PostprocessingContext = Field(default=PostprocessingContext(), description='Postprocessing context')
+    # curation_context: CurationContext = Field(default=CurationContext(), description='Curation context')
 
 
 # # ------------------------------

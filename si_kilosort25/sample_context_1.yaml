@@ -1,0 +1,11 @@
+input: https://dandi-api-staging-dandisets.s3.amazonaws.com/blobs/eb0/202/eb020241-616b-47ce-8d52-76151fe9e90d
+output: ./output/sorting_upload.nwb
+lazy_read_input: true
+stub_test: true
+recording_context:
+  electrical_series_path: /acquisition/ElectricalSeriesRaw
+run_preprocessing: false
+run_spikesorting: true
+spikesorting_context:
+  do_correction: false
+run_postprocessing: false
