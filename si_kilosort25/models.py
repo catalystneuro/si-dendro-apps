@@ -1,6 +1,6 @@
 from dendro.sdk import InputFile, OutputFile
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Union
 
 
 # ------------------------------
@@ -38,7 +38,7 @@ class CommonReference(BaseModel):
 
 class HighpassSpatialFilter(BaseModel):
     n_channel_pad: int = Field(default=60, description="Number of channels to pad")
-    n_channel_taper: int = Field(default=None, description="Number of channels to taper")
+    n_channel_taper: Union[int, None] = Field(default=None, description="Number of channels to taper")
     direction: str = Field(default="y", description="Direction for the spatial filter")
     apply_agc: bool = Field(default=True, description="Whether to apply automatic gain control")
     agc_window_length_s: float = Field(default=0.01, description="Window length in seconds for AGC")
