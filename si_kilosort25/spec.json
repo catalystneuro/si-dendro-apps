@@ -126,7 +126,7 @@
                 {
                     "name": "preprocessing_context.highpass_spatial_filter.n_channel_taper",
                     "description": "Number of channels to taper",
-                    "type": "int",
+                    "type": "Optional[int]",
                     "default": null
                 },
                 {
