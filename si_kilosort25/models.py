@@ -65,6 +65,7 @@ class PreprocessingContext(BaseModel):
     max_bad_channel_fraction_to_remove: float = Field(default=1.1, description="Maximum fraction of bad channels to remove")
 
 
+
 # ------------------------------
 # Sorter Models
 # ------------------------------
