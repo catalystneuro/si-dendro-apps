@@ -4,6 +4,11 @@ SpikeInterface Apps for Dendro
 
 ## Dev
 
+Create / update spec file:
+```shell
+dendro make-app-spec-file --app-dir . --spec-output-file spec.json
+```
+
 Build single App image:
 ```shell
 DOCKER_BUILDKIT=1 docker build -t <tag-name> .

@@ -4,7 +4,7 @@ lazy_read_input: true
 stub_test: true
 recording_context:
   electrical_series_path: /acquisition/ElectricalSeriesRaw
-run_preprocessing: false
+run_preprocessing: true
 run_spikesorting: true
 spikesorting_context:
   do_correction: false
