@@ -154,16 +154,14 @@ class MCKilosortLike(BaseModel):
     interpolate_motion_kwargs: MCInterpolateMotionKwargs = Field(default=MCInterpolateMotionKwargs(border_mode="force_extrapolate", spatial_interpolation_method="kriging"), description="")
 
 
-class MCPreset(str, Enum):
-    nonrigid_accurate = "nonrigid_accurate"
-    rigid_fast = "rigid_fast"
-    kilosort_like = "kilosort_like"
-
-
 class MotionCorrection(BaseModel):
     compute: bool = Field(default=True, description="Whether to compute motion correction")
     apply: bool = Field(default=False, description="Whether to apply motion correction")
-    preset: MCPreset = Field(default=MCPreset.nonrigid_accurate.value, description="Preset for motion correction")
+    preset: str = Field(
+        default="nonrigid_accurate",
+        description="Preset for motion correction",
+        json_schema_extra={'options': ["nonrigid_accurate", "rigid_fast", "kilosort_like"]},
+    )
     motion_kwargs: Union[MCNonrigidAccurate, MCRigidFast, MCKilosortLike] = Field(default=MCNonrigidAccurate(), description="Motion correction parameters")
 
 
