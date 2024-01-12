@@ -158,8 +158,11 @@ class MCKilosortLike(BaseModel):
 
 
 class MotionCorrection(BaseModel):
-    compute: bool = Field(default=True, description="Whether to compute motion correction")
-    apply: bool = Field(default=False, description="Whether to apply motion correction")
+    strategy: str = Field(
+        default="compute",
+        description="What strategy to use for motion correction",
+        json_schema_extra={'options': ["skip", "compute", "apply"]},
+    )
     preset: str = Field(
         default="nonrigid_accurate",
         description="Preset for motion correction",
