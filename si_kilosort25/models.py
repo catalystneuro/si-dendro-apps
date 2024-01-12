@@ -96,7 +96,11 @@ class MCEstimateMotionDecentralized(BaseModel):
     max_displacement_um: float = Field(default=100.0, description="")
     weight_scale: str = Field(default="linear", description="")
     error_sigma: float = Field(default=0.2, description="")
-    conv_engine: str = Field(default="", description="")
+    conv_engine: str = Field(
+        default="numpy",
+        description="",
+        json_schema_extra={'options': ["torch", "numpy"]},
+    )
     torch_device: str = Field(default="", description="")
     batch_size: int = Field(default=1, description="")
     corr_threshold: float = Field(default=0.0, description="")

@@ -46,7 +46,7 @@ class PipelineProcessor(ProcessorBase):
 
         logger.info(recording)
 
-        # TODO - run pipeline
+        # Run pipeline
         job_kwargs = {
             'n_jobs': -1,
             'chunk_duration': '1s',
@@ -55,6 +55,16 @@ class PipelineProcessor(ProcessorBase):
 
         run_preprocessing = context.run_preprocessing
         preprocessing_params = context.preprocessing_context.model_dump()
+        motion_correction_preset = preprocessing_params['motion_correction']['preset']
+        nonrigid_accurate_kwargs = preprocessing_params['motion_correction'].pop('motion_kwargs_nonrigid_accurate')
+        rigid_fast_kwargs = preprocessing_params['motion_correction'].pop('motion_kwargs_rigid_fast')
+        kilosort_like_kwargs = preprocessing_params['motion_correction'].pop('motion_kwargs_kilosort_like')
+        if motion_correction_preset == 'nonrigid_accurate':
+            preprocessing_params['motion_correction']['motion_kwargs'] = nonrigid_accurate_kwargs
+        elif motion_correction_preset == 'rigid_fast':
+            preprocessing_params['motion_correction']['motion_kwargs'] = rigid_fast_kwargs
+        elif motion_correction_preset == 'kilosort_like':
+            preprocessing_params['motion_correction']['motion_kwargs'] = kilosort_like_kwargs
 
         run_spikesorting = context.run_spikesorting
         spikesorting_params = context.spikesorting_context.model_dump()
