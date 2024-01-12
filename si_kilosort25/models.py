@@ -1,7 +1,6 @@
 from dendro.sdk import InputFile, OutputFile
 from pydantic import BaseModel, Field
-from typing import List, Union, Optional
-from enum import Enum
+from typing import List, Union
 
 
 # ------------------------------
@@ -92,16 +91,16 @@ class MCEstimateMotionDecentralized(BaseModel):
     win_step_um: float = Field(default=100.0, description="")
     win_sigma_um: float = Field(default=200.0, description="")
     histogram_depth_smooth_um: float = Field(default=5.0, description="")
-    histogram_time_smooth_s: Optional[float] = Field(default=None, description="")
+    histogram_time_smooth_s: Union[float, None] = Field(default=None, description="")
     pairwise_displacement_method: str = Field(default="conv", description="")
     max_displacement_um: float = Field(default=100.0, description="")
     weight_scale: str = Field(default="linear", description="")
     error_sigma: float = Field(default=0.2, description="")
-    conv_engine: Optional[str] = Field(default=None, description="")
-    torch_device: Optional[str] = Field(default=None, description="")
+    conv_engine: str = Field(default="", description="")
+    torch_device: str = Field(default="", description="")
     batch_size: int = Field(default=1, description="")
     corr_threshold: float = Field(default=0.0, description="")
-    time_horizon_s: Optional[float] = Field(default=None, description="")
+    time_horizon_s: Union[float, None] = Field(default=None, description="")
     convergence_method: str = Field(default="lsmr", description="")
     soft_weights: bool = Field(default=False, description="")
     normalized_xcorr: bool = Field(default=True, description="")
@@ -162,7 +161,9 @@ class MotionCorrection(BaseModel):
         description="Preset for motion correction",
         json_schema_extra={'options': ["nonrigid_accurate", "rigid_fast", "kilosort_like"]},
     )
-    motion_kwargs: Union[MCNonrigidAccurate, MCRigidFast, MCKilosortLike] = Field(default=MCNonrigidAccurate(), description="Motion correction parameters")
+    motion_kwargs_nonrigid_accurate: MCNonrigidAccurate = Field(default=MCNonrigidAccurate(), description="Motion correction parameters for nonrigid_accurate preset")
+    motion_kwargs_rigid_fast: MCRigidFast = Field(default=MCRigidFast(), description="Motion correction parameters for rigid_fast preset")
+    motion_kwargs_kilosort_like: MCKilosortLike = Field(default=MCKilosortLike(), description="Motion correction parameters for kilosort_like preset")
 
 
 # ---------------------------------------------------------------
