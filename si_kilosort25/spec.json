@@ -336,7 +336,11 @@
                     "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.conv_engine",
                     "description": "",
                     "type": "str",
-                    "default": ""
+                    "default": "numpy",
+                    "options": [
+                        "torch",
+                        "numpy"
+                    ]
                 },
                 {
                     "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.torch_device",
@@ -600,7 +604,11 @@
                     "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.conv_engine",
                     "description": "",
                     "type": "str",
-                    "default": ""
+                    "default": "numpy",
+                    "options": [
+                        "torch",
+                        "numpy"
+                    ]
                 },
                 {
                     "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.torch_device",
