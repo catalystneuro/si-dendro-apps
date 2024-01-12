@@ -160,16 +160,15 @@
                     "default": 0.01
                 },
                 {
-                    "name": "preprocessing_context.motion_correction.compute",
-                    "description": "Whether to compute motion correction",
-                    "type": "bool",
-                    "default": true
-                },
-                {
-                    "name": "preprocessing_context.motion_correction.apply",
-                    "description": "Whether to apply motion correction",
-                    "type": "bool",
-                    "default": false
+                    "name": "preprocessing_context.motion_correction.strategy",
+                    "description": "What strategy to use for motion correction",
+                    "type": "str",
+                    "default": "compute",
+                    "options": [
+                        "skip",
+                        "compute",
+                        "apply"
+                    ]
                 },
                 {
                     "name": "preprocessing_context.motion_correction.preset",
