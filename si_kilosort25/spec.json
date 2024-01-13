@@ -160,22 +160,728 @@
                     "default": 0.01
                 },
                 {
-                    "name": "preprocessing_context.motion_correction.compute",
-                    "description": "Whether to compute motion correction",
-                    "type": "bool",
-                    "default": true
-                },
-                {
-                    "name": "preprocessing_context.motion_correction.apply",
-                    "description": "Whether to apply motion correction",
-                    "type": "bool",
-                    "default": false
+                    "name": "preprocessing_context.motion_correction.strategy",
+                    "description": "What strategy to use for motion correction",
+                    "type": "str",
+                    "default": "compute",
+                    "options": [
+                        "skip",
+                        "compute",
+                        "apply"
+                    ]
                 },
                 {
                     "name": "preprocessing_context.motion_correction.preset",
                     "description": "Preset for motion correction",
                     "type": "str",
-                    "default": "nonrigid_accurate"
+                    "default": "nonrigid_accurate",
+                    "options": [
+                        "nonrigid_accurate",
+                        "rigid_fast",
+                        "kilosort_like"
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "locally_exclusive"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.peak_sign",
+                    "description": "",
+                    "type": "str",
+                    "default": "neg"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.detect_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 8.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.exclude_sweep_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.radius_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.radius_um",
+                    "description": "For channel sparsity.",
+                    "type": "float",
+                    "default": 75.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.max_distance_um",
+                    "description": "Boundary for distance estimation.",
+                    "type": "float",
+                    "default": 150.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.optimizer",
+                    "description": "",
+                    "type": "str",
+                    "default": "minimize_with_log_penality"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.enforce_decrease",
+                    "description": "Enforce spatial decreasingness for PTP vectors",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.feature",
+                    "description": "'ptp', 'energy' or 'peak_voltage'. The available features to consider for estimating the position via monopolar triangulation are peak-to-peak amplitudes (ptp, default), energy ('energy', as L2 norm) or voltages at the center of the waveform (peak_voltage)",
+                    "type": "str",
+                    "default": "ptp"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "decentralized"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.direction",
+                    "description": "",
+                    "type": "str",
+                    "default": "y"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.bin_duration_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.rigid",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.bin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.margin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.win_shape",
+                    "description": "",
+                    "type": "str",
+                    "default": "gaussian"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.win_step_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.win_sigma_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 200.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.histogram_depth_smooth_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.histogram_time_smooth_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.pairwise_displacement_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "conv"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.max_displacement_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.weight_scale",
+                    "description": "",
+                    "type": "str",
+                    "default": "linear"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.error_sigma",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.conv_engine",
+                    "description": "",
+                    "type": "str",
+                    "default": "numpy",
+                    "options": [
+                        "torch",
+                        "numpy"
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.torch_device",
+                    "description": "",
+                    "type": "str",
+                    "default": ""
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.batch_size",
+                    "description": "",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.corr_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.time_horizon_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.convergence_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "lsmr"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.soft_weights",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.normalized_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.centered_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.temporal_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.spatial_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.force_spatial_median_continuity",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.reference_displacement",
+                    "description": "",
+                    "type": "str",
+                    "default": "median"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.reference_displacement_time_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.robust_regression_sigma",
+                    "description": "",
+                    "type": "int",
+                    "default": 2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.weight_with_amplitude",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.direction",
+                    "description": "0 | 1 | 2. Dimension along which channel_locations are shifted (0 - x, 1 - y, 2 - z).",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.border_mode",
+                    "description": "'remove_channels' | 'force_extrapolate' | 'force_zeros'. Control how channels are handled on border.",
+                    "type": "str",
+                    "default": "remove_channels"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.spatial_interpolation_method",
+                    "description": "The spatial interpolation method used to interpolate the channel locations.",
+                    "type": "str",
+                    "default": "idw"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.sigma_um",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "float",
+                    "default": 20.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.p",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.num_closest",
+                    "description": "Number of closest channels used by 'idw' method for interpolation.",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "locally_exclusive"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.peak_sign",
+                    "description": "",
+                    "type": "str",
+                    "default": "neg"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.detect_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 8.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.exclude_sweep_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.radius_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.localize_peaks_kwargs.radius_um",
+                    "description": "Radius in um for channel sparsity.",
+                    "type": "float",
+                    "default": 75.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.localize_peaks_kwargs.feature",
+                    "description": "'ptp', 'mean', 'energy' or 'peak_voltage'. Feature to consider for computation",
+                    "type": "str",
+                    "default": "ptp"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "decentralized"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.direction",
+                    "description": "",
+                    "type": "str",
+                    "default": "y"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.bin_duration_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.rigid",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.bin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.margin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.win_shape",
+                    "description": "",
+                    "type": "str",
+                    "default": "gaussian"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.win_step_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.win_sigma_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 200.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.histogram_depth_smooth_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.histogram_time_smooth_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.pairwise_displacement_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "conv"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.max_displacement_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.weight_scale",
+                    "description": "",
+                    "type": "str",
+                    "default": "linear"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.error_sigma",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.conv_engine",
+                    "description": "",
+                    "type": "str",
+                    "default": "numpy",
+                    "options": [
+                        "torch",
+                        "numpy"
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.torch_device",
+                    "description": "",
+                    "type": "str",
+                    "default": ""
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.batch_size",
+                    "description": "",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.corr_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.time_horizon_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.convergence_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "lsmr"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.soft_weights",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.normalized_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.centered_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.temporal_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.spatial_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.force_spatial_median_continuity",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.reference_displacement",
+                    "description": "",
+                    "type": "str",
+                    "default": "median"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.reference_displacement_time_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.robust_regression_sigma",
+                    "description": "",
+                    "type": "int",
+                    "default": 2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.weight_with_amplitude",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.direction",
+                    "description": "0 | 1 | 2. Dimension along which channel_locations are shifted (0 - x, 1 - y, 2 - z).",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.border_mode",
+                    "description": "'remove_channels' | 'force_extrapolate' | 'force_zeros'. Control how channels are handled on border.",
+                    "type": "str",
+                    "default": "remove_channels"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.spatial_interpolation_method",
+                    "description": "The spatial interpolation method used to interpolate the channel locations.",
+                    "type": "str",
+                    "default": "idw"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.sigma_um",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "float",
+                    "default": 20.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.p",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.num_closest",
+                    "description": "Number of closest channels used by 'idw' method for interpolation.",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "locally_exclusive"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.peak_sign",
+                    "description": "",
+                    "type": "str",
+                    "default": "neg"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.detect_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 8.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.exclude_sweep_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.radius_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.radius_um",
+                    "description": "Radius in um for channel sparsity.",
+                    "type": "float",
+                    "default": 40.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.upsampling_um",
+                    "description": "Upsampling resolution for the grid of templates.",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.sigma_um",
+                    "description": "Spatial decays of the fake templates.",
+                    "type": "List[float]",
+                    "default": [
+                        5.0,
+                        25.0,
+                        5
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.sigma_ms",
+                    "description": "The temporal decay of the fake templates.",
+                    "type": "float",
+                    "default": 0.25
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.margin_um",
+                    "description": "The margin for the grid of fake templates.",
+                    "type": "float",
+                    "default": 30.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.percentile",
+                    "description": "The percentage in [0, 100] of the best scalar products kept to estimate the position.",
+                    "type": "float",
+                    "default": 10.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.sparsity_threshold",
+                    "description": "The sparsity threshold (in [0, 1]) below which weights should be considered as 0.",
+                    "type": "float",
+                    "default": 0.01
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.bin_duration_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.rigid",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.win_step_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.win_sigma_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 150.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.margin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.win_shape",
+                    "description": "",
+                    "type": "str",
+                    "default": "rect"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.direction",
+                    "description": "0 | 1 | 2. Dimension along which channel_locations are shifted (0 - x, 1 - y, 2 - z).",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.border_mode",
+                    "description": "'remove_channels' | 'force_extrapolate' | 'force_zeros'. Control how channels are handled on border.",
+                    "type": "str",
+                    "default": "remove_channels"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.spatial_interpolation_method",
+                    "description": "The spatial interpolation method used to interpolate the channel locations.",
+                    "type": "str",
+                    "default": "idw"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.sigma_um",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "float",
+                    "default": 20.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.p",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.num_closest",
+                    "description": "Number of closest channels used by 'idw' method for interpolation.",
+                    "type": "int",
+                    "default": 3
                 },
                 {
                     "name": "preprocessing_context.remove_out_channels",
