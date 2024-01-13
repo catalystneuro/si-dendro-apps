@@ -45,6 +45,7 @@ jobs:
         # if: contains(github.event.head_commit.modified, matrix.app_dir)
         run: |
           cd ${{ matrix.app_dir }}
+          chmod +x main.py
           dendro make-app-spec-file --app-dir . --spec-output-file spec.json
           docker build -t ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest .
           docker push ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest
