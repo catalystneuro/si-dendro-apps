@@ -25,5 +25,6 @@ COPY si_kilosort25/*.py /app/
 COPY si_kilosort25/requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
+
 # Give execution permission to /app/main.py
 RUN chmod +x /app/main.py
