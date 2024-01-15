@@ -1,14 +1,14 @@
 {
-    "name": "si_kilosort25",
-    "description": "Spike Interface Pipeline - Kilosort2.5",
-    "appImage": "ghcr.io/catalystneuro/dendro_si_kilosort25",
+    "name": "si_kilosort3",
+    "description": "Spike Interface Pipeline - Kilosort3",
+    "appImage": "ghcr.io/catalystneuro/dendro_si_kilosort3",
     "appExecutable": "/app/main.py",
     "executable": "/app/main.py",
     "processors": [
         {
-            "name": "spikeinterface_pipeline_ks25",
-            "description": "SpikeInterface Pipeline Processor for Kilosort 2.5",
-            "label": "SpikeInterface Pipeline - Kilosort 2.5",
+            "name": "spikeinterface_pipeline_ks3",
+            "description": "SpikeInterface Pipeline Processor for Kilosort 3",
+            "label": "SpikeInterface Pipeline - Kilosort 3",
             "inputs": [
                 {
                     "name": "input",
@@ -918,8 +918,8 @@
                     "description": "Threshold on projections",
                     "type": "List[int]",
                     "default": [
-                        10,
-                        4
+                        9,
+                        9
                     ]
                 },
                 {
@@ -938,13 +938,13 @@
                     "name": "spikesorting_context.minFR",
                     "description": "Minimum spike rate (Hz), if a cluster falls below this for too long it gets removed",
                     "type": "float",
-                    "default": 0.1
+                    "default": 0.2
                 },
                 {
                     "name": "spikesorting_context.minfr_goodchannels",
                     "description": "Minimum firing rate on a 'good' channel",
                     "type": "float",
-                    "default": 0.1
+                    "default": 0.2
                 },
                 {
                     "name": "spikesorting_context.nblocks",
@@ -962,7 +962,7 @@
                     "name": "spikesorting_context.freq_min",
                     "description": "High-pass filter cutoff frequency",
                     "type": "float",
-                    "default": 150
+                    "default": 300
                 },
                 {
                     "name": "spikesorting_context.sigmaMask",
@@ -974,7 +974,7 @@
                     "name": "spikesorting_context.lam",
                     "description": "The importance of the amplitude penalty (like in Kilosort1: 0 means not used, 10 is average, 50 is a lot)",
                     "type": "float",
-                    "default": 10.0
+                    "default": 20.0
                 },
                 {
                     "name": "spikesorting_context.nPCs",
@@ -998,7 +998,7 @@
                     "name": "spikesorting_context.AUCsplit",
                     "description": "Threshold on the area under the curve (AUC) criterion for performing a split in the final step",
                     "type": "float",
-                    "default": 0.9
+                    "default": 0.8
                 },
                 {
                     "name": "spikesorting_context.do_correction",
