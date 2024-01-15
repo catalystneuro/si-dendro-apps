@@ -102,9 +102,9 @@ class QualityMetrics(BaseModel):
     sliding_rp_violation: bool = Field(default=True, description="Sliding refractory period violation.")
     amplitude_cutoff: bool = Field(default=True, description="Amplitude cutoff.")
     amplitude_median: bool = Field(default=True, description="Amplitude median.")
-    nearest_neighbor: bool = Field(default=True, description="Nearest neighbor.")
-    nn_isolation: bool = Field(default=True, description="Nearest neighbor isolation.")
-    nn_noise_overlap: bool = Field(default=True, description="Nearest neighbor noise overlap.")
+    nearest_neighbor: bool = Field(default=False, description="Nearest neighbor.")
+    nn_isolation: bool = Field(default=False, description="Nearest neighbor isolation.")
+    nn_noise_overlap: bool = Field(default=False, description="Nearest neighbor noise overlap.")
     qm_params: QMParams = Field(default=QMParams(), description="Quality metric parameters.")
     n_jobs: int = Field(default=1, description="Number of jobs.")
 

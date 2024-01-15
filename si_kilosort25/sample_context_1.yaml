@@ -12,3 +12,15 @@ run_spikesorting: true
 spikesorting_context:
   do_correction: false
 run_postprocessing: true
+postprocessing_context:
+  quality_metrics:
+    presence_ratio: true
+    snr: true
+    isi_violation: true
+    rp_violation: true
+    sliding_rp_violation: true
+    amplitude_cutoff: true
+    amplitude_median: true
+    nearest_neighbor: false
+    nn_isolation: false
+    nn_noise_overlap: false
