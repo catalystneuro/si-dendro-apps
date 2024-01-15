@@ -5,8 +5,8 @@ import pynwb
 import h5py
 import logging
 
-from models import PipelineContext
-from nwb_utils import create_sorting_out_nwb_file
+from .models import PipelineContext
+from .nwb_utils import create_sorting_out_nwb_file
 
 
 logging.basicConfig(level=logging.INFO)
@@ -69,25 +69,25 @@ def run_pipeline(context: PipelineContext):
     run_postprocessing = context.run_postprocessing
     postprocessing_params = context.postprocessing_context.model_dump()
     qm_list = list()
-    if postprocessing_params['quality_metrics'].pop(['prsence_ratio']):
+    if postprocessing_params['quality_metrics'].pop('presence_ratio'):
         qm_list.append('presence_ratio')
-    if postprocessing_params['quality_metrics'].pop(['snr']):
+    if postprocessing_params['quality_metrics'].pop('snr'):
         qm_list.append('snr')
-    if postprocessing_params['quality_metrics'].pop(['isi_violation']):
+    if postprocessing_params['quality_metrics'].pop('isi_violation'):
         qm_list.append('isi_violation')
-    if postprocessing_params['quality_metrics'].pop(['rp_violation']):
+    if postprocessing_params['quality_metrics'].pop('rp_violation'):
         qm_list.append('rp_violation')
-    if postprocessing_params['quality_metrics'].pop(['sliding_rp_violation']):
+    if postprocessing_params['quality_metrics'].pop('sliding_rp_violation'):
         qm_list.append('sliding_rp_violation')
-    if postprocessing_params['quality_metrics'].pop(['amplitude_cutoff']):
+    if postprocessing_params['quality_metrics'].pop('amplitude_cutoff'):
         qm_list.append('amplitude_cutoff')
-    if postprocessing_params['quality_metrics'].pop(['amplitude_median']):
+    if postprocessing_params['quality_metrics'].pop('amplitude_median'):
         qm_list.append('amplitude_median')
-    if postprocessing_params['quality_metrics'].pop(['nearest_neighbor']):
+    if postprocessing_params['quality_metrics'].pop('nearest_neighbor'):
         qm_list.append('nearest_neighbor')
-    if postprocessing_params['quality_metrics'].pop(['nn_isolation']):
+    if postprocessing_params['quality_metrics'].pop('nn_isolation'):
         qm_list.append('nn_isolation')
-    if postprocessing_params['quality_metrics'].pop(['nn_noise_overlap']):
+    if postprocessing_params['quality_metrics'].pop('nn_noise_overlap'):
         qm_list.append('nn_noise_overlap')
     postprocessing_params['quality_metrics']['metric_names'] = qm_list
 

@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field
-from typing import Optional
 
 
 class PresenceRatio(BaseModel):
@@ -35,9 +34,6 @@ class SlidingRPViolation(BaseModel):
     )
     max_ref_period_ms: float = Field(
         default=10, description="Maximum refractory period to test in ms, by default 10 ms."
-    )
-    contamination_values: Optional[list] = Field(
-        default=None, description="The contamination values to test, by default np.arange(0.5, 35, 0.5) %"
     )
 
 
@@ -123,7 +119,6 @@ class WaveformsRaw(BaseModel):
     ms_after: float = Field(default=2.0, description="Milliseconds after")
     max_spikes_per_unit: int = Field(default=100, description="Maximum spikes per unit")
     return_scaled: bool = Field(default=True, description="Flag to determine if results should be scaled")
-    dtype: Optional[str] = Field(default=None, description="Data type for the waveforms")
     use_relative_path: bool = Field(default=True, description="Use relative paths")
 
 

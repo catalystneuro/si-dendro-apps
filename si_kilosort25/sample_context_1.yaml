@@ -11,4 +11,4 @@ preprocessing_context:
 run_spikesorting: true
 spikesorting_context:
   do_correction: false
-run_postprocessing: false
+run_postprocessing: true

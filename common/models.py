@@ -2,8 +2,8 @@ from dendro.sdk import InputFile, OutputFile
 from pydantic import BaseModel, Field
 from typing import List, Union
 
-from models_preprocessing import PreprocessingContext
-from models_postprocessing import PostprocessingContext
+from .models_preprocessing import PreprocessingContext
+from .models_postprocessing import PostprocessingContext
 
 
 # ------------------------------
