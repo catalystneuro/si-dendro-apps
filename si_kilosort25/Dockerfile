@@ -20,14 +20,10 @@ RUN git clone https://github.com/SpikeInterface/spikeinterface.git && \
 
 # Copy files into the container
 WORKDIR /app
-COPY *.py ./
-
-# Install requirements
-COPY requirements.txt ./
+COPY /common /app/common
+COPY si_kilosort25/*.py /app/
+COPY si_kilosort25/requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
 # Give execution permission to /app/main.py
 RUN chmod +x /app/main.py
-
-# Set the entrypoint
-# ENTRYPOINT ["python", "/app/main.py"]

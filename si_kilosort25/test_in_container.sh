@@ -10,7 +10,8 @@ ARGS="test-app-processor --app-dir . --processor spikeinterface_pipeline_ks25 --
 
 # Run the Docker container
 docker run --gpus all \
-    -v $(pwd):/app \
+    -v $(pwd)/sample_context_1.yaml:/app/sample_context_1.yaml \
+    -v /mnt/shared_storage/Github/si-dendro-apps/common:/app/common \
     -v /mnt/shared_storage/Github/dendro/python:/src/dendro/python \
     -v /mnt/shared_storage/Github/spikeinterface_pipelines:/src/spikeinterface_pipelines \
     -w /app \
