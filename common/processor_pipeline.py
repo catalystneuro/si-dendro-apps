@@ -40,13 +40,14 @@ def run_pipeline(context: PipelineContext):
 
     logger.info(recording)
 
-    # Run pipeline
+    # Job kwargs
     job_kwargs = {
         'n_jobs': -1,
         'chunk_duration': '1s',
         'progress_bar': False
     }
 
+    # Preprocessing params
     run_preprocessing = context.run_preprocessing
     preprocessing_params = context.preprocessing_context.model_dump()
     motion_correction_preset = preprocessing_params['motion_correction']['preset']
@@ -60,12 +61,37 @@ def run_pipeline(context: PipelineContext):
     elif motion_correction_preset == 'kilosort_like':
         preprocessing_params['motion_correction']['motion_kwargs'] = kilosort_like_kwargs
 
+    # Spikesorting params
     run_spikesorting = context.run_spikesorting
     spikesorting_params = context.spikesorting_context.model_dump()
 
+    # Postprocessing params
     run_postprocessing = context.run_postprocessing
-    # postprocessing_params = context.postprocessing_context.model_dump()
+    postprocessing_params = context.postprocessing_context.model_dump()
+    qm_list = list()
+    if postprocessing_params['quality_metrics'].pop(['prsence_ratio']):
+        qm_list.append('presence_ratio')
+    if postprocessing_params['quality_metrics'].pop(['snr']):
+        qm_list.append('snr')
+    if postprocessing_params['quality_metrics'].pop(['isi_violation']):
+        qm_list.append('isi_violation')
+    if postprocessing_params['quality_metrics'].pop(['rp_violation']):
+        qm_list.append('rp_violation')
+    if postprocessing_params['quality_metrics'].pop(['sliding_rp_violation']):
+        qm_list.append('sliding_rp_violation')
+    if postprocessing_params['quality_metrics'].pop(['amplitude_cutoff']):
+        qm_list.append('amplitude_cutoff')
+    if postprocessing_params['quality_metrics'].pop(['amplitude_median']):
+        qm_list.append('amplitude_median')
+    if postprocessing_params['quality_metrics'].pop(['nearest_neighbor']):
+        qm_list.append('nearest_neighbor')
+    if postprocessing_params['quality_metrics'].pop(['nn_isolation']):
+        qm_list.append('nn_isolation')
+    if postprocessing_params['quality_metrics'].pop(['nn_noise_overlap']):
+        qm_list.append('nn_noise_overlap')
+    postprocessing_params['quality_metrics']['metric_names'] = qm_list
 
+    # Run pipeline
     logger.info('Running pipeline')
     _, sorting, _ = si_pipeline.run_pipeline(
         recording=recording,
@@ -77,7 +103,7 @@ def run_pipeline(context: PipelineContext):
         run_spikesorting=run_spikesorting,
         spikesorting_params=spikesorting_params,
         run_postprocessing=run_postprocessing,
-        # postprocessing_params=postprocessing_params,
+        postprocessing_params=postprocessing_params,
     )
 
     # Upload output file
