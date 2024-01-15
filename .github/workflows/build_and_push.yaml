@@ -49,7 +49,7 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest .
+          docker build -f ${{ matrix.app_dir }}/Dockerfile -t ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest .
           docker push ghcr.io/catalystneuro/dendro_${{ matrix.app_dir }}:latest
 
       - name: Commit files
