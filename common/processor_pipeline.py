@@ -41,11 +41,7 @@ def run_pipeline(context: PipelineContext):
     logger.info(recording)
 
     # Job kwargs
-    job_kwargs = {
-        'n_jobs': -1,
-        'chunk_duration': '1s',
-        'progress_bar': False
-    }
+    job_kwargs = context.job_kwargs.model_dump()
 
     # Preprocessing params
     run_preprocessing = context.run_preprocessing

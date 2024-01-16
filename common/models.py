@@ -6,11 +6,14 @@ from .models_preprocessing import PreprocessingContext
 from .models_postprocessing import PostprocessingContext
 
 
-# ------------------------------
-# Recording Models
-# ------------------------------
 class RecordingContext(BaseModel):
     electrical_series_path: str = Field(description='Path to the electrical series in the NWB file')
+
+
+class JobKwargs(BaseModel):
+    n_jobs: float = Field(default=0.8, description='Number of jobs, must be a positive number between 0 and 1, or -1 for all processors.')
+    chunk_duration: str = Field(default='1s', description='Chunk duration.')
+    progress_bar: bool = Field(default=False, description='Show progress bar.')
 
 
 # ------------------------------
@@ -68,6 +71,7 @@ class PipelineContext(BaseModel):
     output: OutputFile = Field(description='Output NWB file')
     lazy_read_input: bool = Field(default=True, description='Lazy read input file')
     stub_test: bool = Field(default=False, description='Stub test')
+    job_kwargs: JobKwargs = Field(default=JobKwargs(), description='Job kwargs')
     recording_context: RecordingContext = Field(description='Recording context')
     run_preprocessing: bool = Field(default=True, description='Run preprocessing')
     preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext(), description='Preprocessing context')
