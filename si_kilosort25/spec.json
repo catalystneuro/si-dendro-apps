@@ -35,6 +35,24 @@
                     "default": false
                 },
                 {
+                    "name": "job_kwargs.n_jobs",
+                    "description": "Number of jobs, must be a positive number between 0 and 1, or -1 for all processors.",
+                    "type": "float",
+                    "default": 0.8
+                },
+                {
+                    "name": "job_kwargs.chunk_duration",
+                    "description": "Chunk duration.",
+                    "type": "str",
+                    "default": "1s"
+                },
+                {
+                    "name": "job_kwargs.progress_bar",
+                    "description": "Show progress bar.",
+                    "type": "bool",
+                    "default": false
+                },
+                {
                     "name": "recording_context.electrical_series_path",
                     "description": "Path to the electrical series in the NWB file",
                     "type": "str"
