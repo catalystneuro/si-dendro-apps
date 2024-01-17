@@ -1,5 +1,6 @@
 from spikeinterface_pipelines import pipeline as si_pipeline
 from spikeinterface.extractors import NwbRecordingExtractor
+from pathlib import Path
 import os
 import pynwb
 import h5py
@@ -12,6 +13,8 @@ from .nwb_utils import create_sorting_out_nwb_file
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+
 
 def run_pipeline(context: PipelineContext):
     """
@@ -20,6 +23,12 @@ def run_pipeline(context: PipelineContext):
     Args:
         context (PipelineContext): Pipeline context model.
     """
+    # Create folders
+    results_folder = Path("./results/")
+    results_folder.mkdir(exist_ok=True, parents=True)
+    scratch_folder = Path("./scratch/")
+    scratch_folder.mkdir(exist_ok=True, parents=True)
+
     # Create SI recording from InputFile
     logger.info('Opening remote input file')
     download = not context.lazy_read_input
@@ -39,6 +48,9 @@ def run_pipeline(context: PipelineContext):
         recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
 
     logger.info(recording)
+
+    # logger.info('Saving preprocessed recording')
+    # recording = recording.save(folder=scratch_folder / "preprocessed")
 
     # Job kwargs
     job_kwargs = context.job_kwargs.model_dump()
