@@ -49,8 +49,9 @@ def run_pipeline(context: PipelineContext):
 
     logger.info(recording)
 
-    # logger.info('Saving preprocessed recording')
-    # recording = recording.save(folder=scratch_folder / "preprocessed")
+    if context.write_recording:
+        logger.info('Writing binary recording')
+        recording = recording.save(folder=scratch_folder / "preprocessed")
 
     # Job kwargs
     job_kwargs = context.job_kwargs.model_dump()

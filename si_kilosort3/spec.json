@@ -29,6 +29,12 @@
                     "default": true
                 },
                 {
+                    "name": "write_recording",
+                    "description": "Write recording",
+                    "type": "bool",
+                    "default": false
+                },
+                {
                     "name": "stub_test",
                     "description": "Stub test",
                     "type": "bool",

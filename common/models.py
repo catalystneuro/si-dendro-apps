@@ -70,6 +70,7 @@ class PipelineContext(BaseModel):
     input: InputFile = Field(description='Input NWB file')
     output: OutputFile = Field(description='Output NWB file')
     lazy_read_input: bool = Field(default=True, description='Lazy read input file')
+    write_recording: bool = Field(default=False, description='Write recording')
     stub_test: bool = Field(default=False, description='Stub test')
     job_kwargs: JobKwargs = Field(default=JobKwargs(), description='Job kwargs')
     recording_context: RecordingContext = Field(description='Recording context')
