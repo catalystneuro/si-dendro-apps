@@ -6,7 +6,7 @@ import pynwb
 import h5py
 import logging
 
-from .models import PipelineContext
+from .models import PipelineFullContext
 from .nwb_utils import create_sorting_out_nwb_file
 
 
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
 
-def run_pipeline(context: PipelineContext):
+def run_pipeline(context: PipelineFullContext):
     """
     Runs the spikeinterface pipeline.
 
@@ -31,7 +31,7 @@ def run_pipeline(context: PipelineContext):
 
     # Create SI recording from InputFile
     logger.info('Opening remote input file')
-    download = not context.lazy_read_input
+    download = not context.recording_context.lazy_read_input
     ff = context.input.get_file(download=download)
 
     logger.info('Creating input recording')
@@ -42,14 +42,14 @@ def run_pipeline(context: PipelineContext):
         # stream_mode="remfile"
     )
 
-    if context.stub_test:
+    if context.recording_context.stub_test:
         logger.info('Running in stub test mode')
         n_frames = int(min(300_000, recording.get_num_frames()))
         recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
 
     logger.info(recording)
 
-    if context.write_recording:
+    if context.recording_context.write_recording:
         logger.info('Writing binary recording')
         recording = recording.save(folder=scratch_folder / "recording")
 
@@ -102,7 +102,7 @@ def run_pipeline(context: PipelineContext):
 
     # Run pipeline
     logger.info('Running pipeline')
-    _, sorting, _ = si_pipeline.run_pipeline(
+    recording_preprocessed, sorting, waveform_extractor = si_pipeline.run_pipeline(
         recording=recording,
         scratch_folder="./scratch/",
         results_folder="./results/",
@@ -124,13 +124,15 @@ def run_pipeline(context: PipelineContext):
 
             if not os.path.exists('output'):
                 os.mkdir('output')
-            sorting_out_fname = 'output/sorting.nwb'
+
+            output_fname = 'output/output.nwb'
 
             create_sorting_out_nwb_file(
                 nwbfile_original=nwbfile_rec,
+                recording=recording_preprocessed,
                 sorting=sorting,
-                sorting_out_fname=sorting_out_fname
+                output_fname=output_fname
             )
 
         logger.info('Uploading output NWB file')
-        context.output.upload(sorting_out_fname)
+        context.output.upload(output_fname)
