@@ -44,7 +44,8 @@ def run_pipeline(context: PipelineFullContext):
 
     if context.recording_context.stub_test:
         logger.info('Running in stub test mode')
-        n_frames = int(min(300_000, recording.get_num_frames()))
+        stub_test_num_frames = context.stub_test_duration_sec * recording.get_sampling_frequency()
+        n_frames = int(min(stub_test_num_frames, recording.get_num_frames()))
         recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
 
     logger.info(recording)
