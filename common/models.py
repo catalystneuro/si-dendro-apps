@@ -4,6 +4,7 @@ from typing import List, Union
 
 from .models_preprocessing import PreprocessingContext
 from .models_postprocessing import PostprocessingContext
+from .models_curation import CurationContext
 
 
 class RecordingContext(BaseModel):
@@ -93,7 +94,7 @@ class PipelineFullContext(BaseModel):
     run_postprocessing: bool = Field(default=True, description='Run postprocessing')
     postprocessing_context: PostprocessingContext = Field(default=PostprocessingContext(), description='Postprocessing context')
     run_curation: bool = Field(default=True, description='Run curation')
-    # curation_context: CurationContext = Field(default=CurationContext(), description='Curation context')
+    curation_context: CurationContext = Field(default=CurationContext(), description='Curation context')
     run_visualization: bool = Field(default=True, description='Run visualization')
     # visualization_context: VisualizationContext = Field(default=VisualizationContext(), description='Visualization context')
 

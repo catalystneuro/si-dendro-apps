@@ -103,6 +103,7 @@ def run_pipeline(context: PipelineFullContext):
 
     # Curation params
     run_curation = context.run_curation
+    curation_params = context.curation_context.model_dump()
 
     # Visualization params
     run_visualization = context.run_visualization
@@ -117,7 +118,7 @@ def run_pipeline(context: PipelineFullContext):
         preprocessing_params=preprocessing_params,
         spikesorting_params=spikesorting_params,
         postprocessing_params=postprocessing_params,
-        # curation_params=,
+        curation_params=curation_params,
         # visualization_params=,
         run_preprocessing=run_preprocessing,
         run_spikesorting=run_spikesorting,
@@ -141,7 +142,7 @@ def run_pipeline(context: PipelineFullContext):
             create_sorting_out_nwb_file(
                 nwbfile_original=nwbfile_rec,
                 recording=recording_preprocessed,
-                sorting=sorting,
+                sorting=sorting_curated if run_curation else sorting,
                 output_fname=output_fname
             )
 
