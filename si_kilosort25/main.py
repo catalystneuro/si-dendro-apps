@@ -4,7 +4,7 @@ from dendro.sdk import App, ProcessorBase
 from pydantic import Field
 from common.models import (
     Kilosort25SortingContext,
-    PipelineContext as CommonPipelineContext
+    PipelineFullContext
 )
 from common.processor_pipeline import run_pipeline
 
@@ -20,7 +20,7 @@ app = App(
 
 
 # We need to overwrite this with the specific sorter, to generate the correct forms
-class PipelineContext(CommonPipelineContext):
+class PipelineContext(PipelineFullContext):
     spikesorting_context: Kilosort25SortingContext = Field(default=Kilosort25SortingContext())
 
 
