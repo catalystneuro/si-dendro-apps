@@ -37,7 +37,7 @@ def run_pipeline(context: PipelineFullContext):
     logger.info('Creating input recording')
     recording = NwbRecordingExtractor(
         file=ff,
-        electrical_series_location=context.recording_context.electrical_series_path,
+        electrical_series_path=context.recording_context.electrical_series_path,
         # file_path=context.input.get_url(),
         # stream_mode="remfile"
     )
