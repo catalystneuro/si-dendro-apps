@@ -72,6 +72,7 @@ class PipelineContext(BaseModel):
     lazy_read_input: bool = Field(default=True, description='Lazy read input file')
     write_recording: bool = Field(default=False, description='Write recording')
     stub_test: bool = Field(default=False, description='Stub test')
+    stub_test_duration_sec: float = Field(default=300, description='Stub test duration in seconds')
     job_kwargs: JobKwargs = Field(default=JobKwargs(), description='Job kwargs')
     recording_context: RecordingContext = Field(description='Recording context')
     run_preprocessing: bool = Field(default=True, description='Run preprocessing')
