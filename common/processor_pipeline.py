@@ -101,19 +101,29 @@ def run_pipeline(context: PipelineFullContext):
         qm_list.append('nn_noise_overlap')
     postprocessing_params['quality_metrics']['metric_names'] = qm_list
 
+    # Curation params
+    run_curation = context.run_curation
+
+    # Visualization params
+    run_visualization = context.run_visualization
+
     # Run pipeline
     logger.info('Running pipeline')
-    recording_preprocessed, sorting, waveform_extractor = si_pipeline.run_pipeline(
+    recording_preprocessed, sorting, waveform_extractor, sorting_curated, visualization_output = si_pipeline.run_pipeline(
         recording=recording,
         scratch_folder="./scratch/",
         results_folder="./results/",
         job_kwargs=job_kwargs,
-        run_preprocessing=run_preprocessing,
         preprocessing_params=preprocessing_params,
-        run_spikesorting=run_spikesorting,
         spikesorting_params=spikesorting_params,
-        run_postprocessing=run_postprocessing,
         postprocessing_params=postprocessing_params,
+        # curation_params=,
+        # visualization_params=,
+        run_preprocessing=run_preprocessing,
+        run_spikesorting=run_spikesorting,
+        run_postprocessing=run_postprocessing,
+        run_curation=run_curation,
+        run_visualization=run_visualization
     )
 
     # Upload output file
