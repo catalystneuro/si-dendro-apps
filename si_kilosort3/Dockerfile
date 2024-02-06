@@ -19,7 +19,7 @@ RUN git clone https://github.com/SpikeInterface/spikeinterface_pipelines.git && 
 #     pip install -e .[full]
 
 # Install spikeinterface
-RUN pip install spikeinterface==0.100.0
+RUN pip install spikeinterface[full]==0.100.0
 
 # Copy files into the container
 WORKDIR /app
