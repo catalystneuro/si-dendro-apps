@@ -163,6 +163,7 @@ class MotionCorrection(BaseModel):
 
 
 class PreprocessingContext(BaseModel):
+    add_preprocessed_to_output_nwb: bool = Field(default=False, description="Whether to add preprocessed data to output NWB file or not")
     preprocessing_strategy: str = Field(default="cmr", description="Strategy for preprocessing")
     highpass_filter: HighpassFilter = Field(default=HighpassFilter(), description="Highpass filter")
     phase_shift: PhaseShift = Field(default=PhaseShift(), description="Phase shift")

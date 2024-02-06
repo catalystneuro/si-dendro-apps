@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union, List, Optional
 # from neuroconv.tools.spikeinterface import write_sorting
 from pynwb import NWBFile
 from pynwb.file import Subject
@@ -103,7 +103,12 @@ class NwbRecordingSegment(si.BaseRecordingSegment):
             return self._electrical_series_data[start_frame:end_frame, channel_indices]
 
 
-def create_sorting_out_nwb_file(nwbfile_original, sorting: si.BaseSorting, sorting_out_fname: str):
+def create_sorting_out_nwb_file(
+    nwbfile_original,
+    recording: Optional[si.BaseRecording] = None,
+    sorting: Optional[si.BaseSorting] = None,
+    output_fname: Optional[str] = None
+):
     nwbfile = NWBFile(
         session_description=nwbfile_original.session_description + " - spike sorting results.",
         identifier=str(uuid4()),
@@ -123,15 +128,17 @@ def create_sorting_out_nwb_file(nwbfile_original, sorting: si.BaseSorting, sorti
         )
     )
 
-    for ii, unit_id in enumerate(sorting.get_unit_ids()):
-        st = sorting.get_unit_spike_train(unit_id) / sorting.get_sampling_frequency()
-        nwbfile.add_unit(
-            id=ii + 1,  # must be an int
-            spike_times=st
-        )
+    # Add sorting
+    if sorting is not None:
+        for ii, unit_id in enumerate(sorting.get_unit_ids()):
+            st = sorting.get_unit_spike_train(unit_id) / sorting.get_sampling_frequency()
+            nwbfile.add_unit(
+                id=ii + 1,  # must be an int
+                spike_times=st
+            )
 
     # Write the nwb file
-    with pynwb.NWBHDF5IO(path=sorting_out_fname, mode='w') as io:
+    with pynwb.NWBHDF5IO(path=output_fname, mode='w') as io:
         io.write(container=nwbfile, cache_spec=True)
 
     # write_sorting(

@@ -4,10 +4,15 @@ from typing import List, Union
 
 from .models_preprocessing import PreprocessingContext
 from .models_postprocessing import PostprocessingContext
+from .models_curation import CurationContext
 
 
 class RecordingContext(BaseModel):
     electrical_series_path: str = Field(description='Path to the electrical series in the NWB file')
+    lazy_read_input: bool = Field(default=True, description='Lazy read input file')
+    write_recording: bool = Field(default=False, description='Write recording')
+    stub_test: bool = Field(default=False, description='Stub test')
+    stub_test_duration_sec: float = Field(default=300, description='Stub test duration in seconds')
 
 
 class JobKwargs(BaseModel):
@@ -66,13 +71,17 @@ class Kilosort3SortingContext(BaseModel):
 # ------------------------------
 # Pipeline Models
 # ------------------------------
-class PipelineContext(BaseModel):
+class PipelinePreprocessingContext(BaseModel):
     input: InputFile = Field(description='Input NWB file')
     output: OutputFile = Field(description='Output NWB file')
-    lazy_read_input: bool = Field(default=True, description='Lazy read input file')
-    write_recording: bool = Field(default=False, description='Write recording')
-    stub_test: bool = Field(default=False, description='Stub test')
-    stub_test_duration_sec: float = Field(default=300, description='Stub test duration in seconds')
+    job_kwargs: JobKwargs = Field(default=JobKwargs(), description='Job kwargs')
+    recording_context: RecordingContext = Field(description='Recording context')
+    preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext())
+
+
+class PipelineFullContext(BaseModel):
+    input: InputFile = Field(description='Input NWB file')
+    output: OutputFile = Field(description='Output NWB file')
     job_kwargs: JobKwargs = Field(default=JobKwargs(), description='Job kwargs')
     recording_context: RecordingContext = Field(description='Recording context')
     run_preprocessing: bool = Field(default=True, description='Run preprocessing')
@@ -84,8 +93,10 @@ class PipelineContext(BaseModel):
     ] = Field(description='Sorting context')
     run_postprocessing: bool = Field(default=True, description='Run postprocessing')
     postprocessing_context: PostprocessingContext = Field(default=PostprocessingContext(), description='Postprocessing context')
-    # curation_context: CurationContext = Field(default=CurationContext(), description='Curation context')
-
+    run_curation: bool = Field(default=True, description='Run curation')
+    curation_context: CurationContext = Field(default=CurationContext(), description='Curation context')
+    run_visualization: bool = Field(default=True, description='Run visualization')
+    # visualization_context: VisualizationContext = Field(default=VisualizationContext(), description='Visualization context')
 
 
 
