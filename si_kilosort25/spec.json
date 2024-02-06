@@ -15,12 +15,14 @@
                     "description": "Input NWB file"
                 }
             ],
+            "inputFolders": [],
             "outputs": [
                 {
                     "name": "output",
                     "description": "Output NWB file"
                 }
             ],
+            "outputFolders": [],
             "parameters": [
                 {
                     "name": "lazy_read_input",
@@ -39,6 +41,12 @@
                     "description": "Stub test",
                     "type": "bool",
                     "default": false
+                },
+                {
+                    "name": "stub_test_duration_sec",
+                    "description": "Stub test duration in seconds",
+                    "type": "float",
+                    "default": 300
                 },
                 {
                     "name": "job_kwargs.n_jobs",
