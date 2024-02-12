@@ -61,6 +61,13 @@ class SIPreprocessingDevProcessor(ProcessorBase):
             stream_mode='dendro'
         )
 
+        if context.start_time_sec is not None:
+            if context.end_time_sec is None:
+                raise Exception('If start_time_sec is specified, then end_time_sec must also be specified')
+            recording = recording.frame_slice(start_frame=int(context.start_time_sec * recording.get_sampling_frequency()), end_frame=int(context.end_time_sec * recording.get_sampling_frequency()))
+        elif context.end_time_sec is not None:
+            raise Exception('If end_time_sec is specified, then start_time_sec must also be specified')
+
         preprocessing_params_dict = context.preprocessing_context.model_dump()
         preprocessing_params = PreprocessingParams(**preprocessing_params_dict)
 
