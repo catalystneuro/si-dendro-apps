@@ -16,6 +16,7 @@ RUN pip install dendro==0.2.2
 WORKDIR /app
 COPY /common /app/common
 COPY si_preprocessing_dev/*.py /app/
+COPY si_preprocessing_dev/nwbdendroextractors/*.py /app/nwbdendroextractors/
 COPY si_preprocessing_dev/requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
