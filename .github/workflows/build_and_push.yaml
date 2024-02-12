@@ -6,6 +6,7 @@ on:
         - main
     paths:
         - '*/**'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,6 +17,7 @@ jobs:
         app_dir:
           # - si_kilosort25
           # - si_kilosort3
+          # For now only push this one app
           - si_preprocessing_dev
 
     steps:
