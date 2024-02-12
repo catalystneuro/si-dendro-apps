@@ -121,19 +121,24 @@ class SIPreprocessingDevProcessor(ProcessorBase):
             # Detect and remove bad channels
             print('DETECT BAD CHANNELS')
             _, channel_labels = spre.detect_bad_channels(
-                recording_hp_full, **preprocessing_params.detect_bad_channels.model_dump()
+                recording_hp_full, **preprocessing_params.detect_bad_channels.model_dump(),
+                num_random_chunks=3,
+                chunk_duration_s=0.1
             )
+            print('TEST A')
             dead_channel_mask = channel_labels == "dead"
             noise_channel_mask = channel_labels == "noise"
             out_channel_mask = channel_labels == "out"
             logger.info(
                 f"[Preprocessing] \tBad channel detection found: {np.sum(dead_channel_mask)} dead, {np.sum(noise_channel_mask)} noise, {np.sum(out_channel_mask)} out channels"
             )
+            print('TEST B')
             dead_channel_ids = recording_hp_full.channel_ids[dead_channel_mask]
             noise_channel_ids = recording_hp_full.channel_ids[noise_channel_mask]
             out_channel_ids = recording_hp_full.channel_ids[out_channel_mask]
             all_bad_channel_ids = np.concatenate((dead_channel_ids, noise_channel_ids, out_channel_ids))
 
+            print('TEST C')
             max_bad_channel_fraction_to_remove = preprocessing_params.max_bad_channel_fraction_to_remove
             if len(all_bad_channel_ids) >= int(max_bad_channel_fraction_to_remove * recording.get_num_channels()):
                 logger.info(
@@ -142,6 +147,7 @@ class SIPreprocessingDevProcessor(ProcessorBase):
                 logger.info("[Preprocessing] \tSkipping further processing for this recording.")
                 return recording_hp_full
 
+            print('TEST D')
             if preprocessing_params.remove_out_channels:
                 logger.info(f"[Preprocessing] \tRemoving {len(out_channel_ids)} out channels")
                 recording_rm_out = recording_hp_full.remove_channels(out_channel_ids)
