@@ -10,7 +10,7 @@ RUN git clone https://github.com/SpikeInterface/spikeinterface_pipelines.git && 
 RUN pip install spikeinterface[full]==0.100.0
 
 # Install dendro
-RUN pip install dendro==0.2.2
+RUN pip install dendro==0.2.3
 
 # Copy files into the container
 WORKDIR /app
