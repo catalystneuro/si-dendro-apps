@@ -890,18 +890,6 @@
                     "description": "Maximum fraction of bad channels to remove",
                     "type": "float",
                     "default": 1.1
-                },
-                {
-                    "name": "start_time_sec",
-                    "description": "Start time in seconds, or None for the beginning",
-                    "type": "Optional[float]",
-                    "default": null
-                },
-                {
-                    "name": "end_time_sec",
-                    "description": "End time in seconds, or None for the end",
-                    "type": "Optional[float]",
-                    "default": null
                 }
             ],
             "attributes": [
