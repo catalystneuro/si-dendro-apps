@@ -42,7 +42,7 @@ class SIPreprocessingDevProcessor(ProcessorBase):
     def run(context: SIPreprocessingDevContext):
         from pathlib import Path
         from spikeinterface_pipelines.preprocessing import PreprocessingParams
-        from nwbdendroextractors import NwbRecordingExtractor
+        from dendroextractors.nwb.nwbdendroextractors import NwbDendroRecordingExtractor
         import spikeinterface as si
         import numpy as np
         import spikeinterface.preprocessing as spre
@@ -58,7 +58,7 @@ class SIPreprocessingDevProcessor(ProcessorBase):
         uri = context.input.get_project_file_uri()
 
         logger.info('Creating input recording')
-        recording = NwbRecordingExtractor(
+        recording = NwbDendroRecordingExtractor(
             file_path=uri,
             electrical_series_path=context.electrical_series_path,
             stream_mode='dendro'
@@ -125,20 +125,17 @@ class SIPreprocessingDevProcessor(ProcessorBase):
                 num_random_chunks=3,
                 chunk_duration_s=0.1
             )
-            print('TEST A')
             dead_channel_mask = channel_labels == "dead"
             noise_channel_mask = channel_labels == "noise"
             out_channel_mask = channel_labels == "out"
             logger.info(
                 f"[Preprocessing] \tBad channel detection found: {np.sum(dead_channel_mask)} dead, {np.sum(noise_channel_mask)} noise, {np.sum(out_channel_mask)} out channels"
             )
-            print('TEST B')
             dead_channel_ids = recording_hp_full.channel_ids[dead_channel_mask]
             noise_channel_ids = recording_hp_full.channel_ids[noise_channel_mask]
             out_channel_ids = recording_hp_full.channel_ids[out_channel_mask]
             all_bad_channel_ids = np.concatenate((dead_channel_ids, noise_channel_ids, out_channel_ids))
 
-            print('TEST C')
             max_bad_channel_fraction_to_remove = preprocessing_params.max_bad_channel_fraction_to_remove
             if len(all_bad_channel_ids) >= int(max_bad_channel_fraction_to_remove * recording.get_num_channels()):
                 logger.info(
@@ -147,7 +144,6 @@ class SIPreprocessingDevProcessor(ProcessorBase):
                 logger.info("[Preprocessing] \tSkipping further processing for this recording.")
                 return recording_hp_full
 
-            print('TEST D')
             if preprocessing_params.remove_out_channels:
                 logger.info(f"[Preprocessing] \tRemoving {len(out_channel_ids)} out channels")
                 recording_rm_out = recording_hp_full.remove_channels(out_channel_ids)
