@@ -13,7 +13,7 @@ RUN pip install spikeinterface[full]==0.100.0
 RUN pip install dendro==0.2.4
 
 # Install dendroextractors
-RUN pip install dendroextractors==0.1.2
+RUN pip install dendroextractors==0.1.4
 
 # Copy files into the container
 WORKDIR /app
