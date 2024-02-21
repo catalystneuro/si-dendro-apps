@@ -280,13 +280,22 @@ class SIMotionCorrectionDevProcessor(ProcessorBase):
             localize_peaks_kwargs=motion_correction_kwargs.localize_peaks_kwargs.model_dump(),
             estimate_motion_kwargs=motion_correction_kwargs.estimate_motion_kwargs.model_dump(),
             interpolate_motion_kwargs=motion_correction_kwargs.interpolate_motion_kwargs.model_dump(),
+            j_jobs=context.n_jobs
         )
-        assert isinstance(recording_corrected, si.BaseRecording), "recording_corrected is not a si.BaseRecording"
+        from spikeinterface.sortingcomponents.motion_interpolation import InterpolateMotionRecording
+        assert isinstance(recording_corrected, InterpolateMotionRecording), "recording_corrected is not a InterpolateMotionRecording"
+
+        # Swap out the binary recording for the original recording
+        new_kwargs = recording_corrected._kwargs
+        new_kwargs['recording'] = recording1
+        recording_new = InterpolateMotionRecording(
+            **new_kwargs
+        )
 
         print('Saving output...')
-        recording_corrected.dump_to_json('recording_preprocessed.json')
+        recording_new.dump_to_json('recording_corrected.json')
         print('Uplading output...')
-        context.output.upload('recording_preprocessed.json')
+        context.output.upload('recording_corrected.json')
         print('Done')
 
 
