@@ -280,7 +280,7 @@ class SIMotionCorrectionDevProcessor(ProcessorBase):
             localize_peaks_kwargs=motion_correction_kwargs.localize_peaks_kwargs.model_dump(),
             estimate_motion_kwargs=motion_correction_kwargs.estimate_motion_kwargs.model_dump(),
             interpolate_motion_kwargs=motion_correction_kwargs.interpolate_motion_kwargs.model_dump(),
-            j_jobs=context.n_jobs
+            n_jobs=context.n_jobs
         )
         from spikeinterface.sortingcomponents.motion_interpolation import InterpolateMotionRecording
         assert isinstance(recording_corrected, InterpolateMotionRecording), "recording_corrected is not a InterpolateMotionRecording"
