@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-from typing import Optional
 import logging
 from dendro.sdk import App, ProcessorBase, BaseModel, Field, InputFile, OutputFile
-from common.models_preprocessing import PreprocessingContext
+from common.models_preprocessing import MCKilosortLike, MCNonrigidAccurate, MCRigidFast, MotionCorrection, PreprocessingContext
 
 
 logging.basicConfig(level=logging.INFO)
@@ -206,7 +205,92 @@ class SIPreprocessingDevProcessor(ProcessorBase):
         print('Done')
 
 
+class SIMotionCorrectionDevContext(BaseModel):
+    input: InputFile = Field(description="Input SI .json file")
+    output: OutputFile = Field(description="Output SI .json file")
+    motion_correction_context: MotionCorrection = Field(default=MotionCorrection(), description="Motion correction context")
+    n_jobs: int = Field(default=4, description="Number of jobs for writing the .dat file")
+    chunk_duration: str = Field(default='2s', description="Chunk duration for writing the .dat file")
+
+
+class SIMotionCorrectionDevProcessor(ProcessorBase):
+    name = 'si-preprocessing-dev.motion_correction'
+    label = 'SpikeInterface Pipeline - Motion Correction Dev'
+    description = "SpikeInterface Pipeline Processor for Motion Correction tasks Dev"
+    tags = ['spike_interface', 'motion_correction', 'electrophysiology', 'pipeline']
+    attributes = {
+        'wip': True
+    }
+
+    @staticmethod
+    def run(context: SIMotionCorrectionDevContext):
+        import spikeinterface as si
+        import spikeinterface.preprocessing as spre
+
+        context.input.download('recording.json')
+
+        print('Loading recording...')
+        recording1 = si.load_extractor('recording.json')
+        assert isinstance(recording1, si.BaseRecording), "Recording is not a BaseRecording"
+
+        print('Writing recording to .dat file...')
+        si.BinaryRecordingExtractor.write_recording(
+            recording=recording1,
+            file_paths=['recording.dat'],
+            dtype='float32',
+            n_jobs=context.n_jobs,
+            chunk_duration=context.chunk_duration,
+            mp_context='spawn'
+        )
+        print('Loading recording from .dat file...')
+        recording = si.BinaryRecordingExtractor(
+            file_paths=['recording.dat'],
+            sampling_frequency=recording1.get_sampling_frequency(),
+            channel_ids=recording1.get_channel_ids(),
+            num_channels=recording1.get_num_channels(),
+            dtype='float32'
+        )
+
+        motion_correction = context.motion_correction_context
+
+        if motion_correction.strategy == 'apply':
+            raise Exception('You cannot run motion correction with strategy "apply": within this processor')
+        if motion_correction.strategy == 'skip':
+            raise Exception('You cannot run motion correction with strategy "skip": within this processor')
+        assert motion_correction.strategy == 'compute', f"Unknown motion correction strategy: {motion_correction.strategy}"
+
+        preset = motion_correction.preset
+        if preset == "nonrigid_accurate":
+            motion_correction_kwargs = MCNonrigidAccurate(**motion_correction.motion_kwargs_nonrigid_accurate.model_dump())
+        elif preset == "rigid_fast":
+            motion_correction_kwargs = MCRigidFast(**motion_correction.motion_kwargs_rigid_fast.model_dump())
+        elif preset == "kilosort_like":
+            motion_correction_kwargs = MCKilosortLike(**motion_correction.motion_kwargs_kilosort_like.model_dump())
+        else:
+            raise Exception(f"Unknown motion correction preset: {preset}")
+        logger.info(f"[Preprocessing] \tComputing motion correction with preset: {preset}")
+        motion_folder = "motion_correction"
+        recording_corrected = spre.correct_motion(
+            recording,
+            preset=preset,
+            folder=motion_folder,
+            verbose=False,
+            detect_kwargs=motion_correction_kwargs.detect_kwargs.model_dump(),
+            localize_peaks_kwargs=motion_correction_kwargs.localize_peaks_kwargs.model_dump(),
+            estimate_motion_kwargs=motion_correction_kwargs.estimate_motion_kwargs.model_dump(),
+            interpolate_motion_kwargs=motion_correction_kwargs.interpolate_motion_kwargs.model_dump(),
+        )
+        assert isinstance(recording_corrected, si.BaseRecording), "recording_corrected is not a si.BaseRecording"
+
+        print('Saving output...')
+        recording_corrected.dump_to_json('recording_preprocessed.json')
+        print('Uplading output...')
+        context.output.upload('recording_preprocessed.json')
+        print('Done')
+
+
 app.add_processor(SIPreprocessingDevProcessor)
+app.add_processor(SIMotionCorrectionDevProcessor)
 
 if __name__ == '__main__':
     app.run()
