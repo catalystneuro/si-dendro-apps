@@ -250,6 +250,7 @@ class SIMotionCorrectionDevProcessor(ProcessorBase):
             num_channels=recording1.get_num_channels(),
             dtype='float32'
         )
+        recording.set_channel_locations(recording1.get_channel_locations())
 
         motion_correction = context.motion_correction_context
 
