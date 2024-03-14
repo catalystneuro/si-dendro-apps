@@ -1,17 +1,20 @@
+# https://api-staging.dandiarchive.org/api/dandisets/209909/versions/draft/assets/626149d2-9ac4-4471-805d-f64b119acc54/
 input: https://dandi-api-staging-dandisets.s3.amazonaws.com/blobs/eb0/202/eb020241-616b-47ce-8d52-76151fe9e90d
 output: ./output/sorting_upload.nwb
-lazy_read_input: true
-stub_test: true
 recording_context:
   electrical_series_path: /acquisition/ElectricalSeriesRaw
+  lazy_read_input: true
+  stub_test: true
+  stub_test_duration_sec: 10
 run_preprocessing: true
 preprocessing_context:
   motion_correction:
+    strategy: skip
     preset: nonrigid_accurate
 run_spikesorting: true
 spikesorting_context:
   do_correction: false
-run_postprocessing: true
+run_postprocessing: false
 postprocessing_context:
   quality_metrics:
     presence_ratio: true
