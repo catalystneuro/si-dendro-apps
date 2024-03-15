@@ -114,6 +114,11 @@ class PipelineFullContext(BaseModel):
     run_preprocessing: bool = Field(default=True, description='Run preprocessing')
     preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext(), description='Preprocessing context')
     run_spikesorting: bool = Field(default=True, description='Run spike sorting')
+    sorter_name: str = Field(
+        default='mountainsort5',
+        description="Name of the sorter to use.",
+        json_schema_extra={'options': ["kilosort2_5", "kilosort3", "mountainsort5"]}
+    )
     spikesorting_context: Union[
         Kilosort25SortingContext,
         Kilosort3SortingContext,

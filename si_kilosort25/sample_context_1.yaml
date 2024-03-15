@@ -12,6 +12,7 @@ preprocessing_context:
     strategy: skip
     preset: nonrigid_accurate
 run_spikesorting: true
+sorter_name: kilosort2_5
 spikesorting_context:
   do_correction: false
 run_postprocessing: false

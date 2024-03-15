@@ -73,7 +73,9 @@ def run_pipeline(context: PipelineFullContext):
 
     # Spikesorting params
     run_spikesorting = context.run_spikesorting
-    spikesorting_params = context.spikesorting_context.model_dump()
+    spikesorting_params = dict()
+    spikesorting_params["sorter_name"] = context.sorter_name
+    spikesorting_params["sorter_kwargs"] = context.spikesorting_context.model_dump()
 
     # Postprocessing params
     run_postprocessing = context.run_postprocessing

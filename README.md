@@ -27,6 +27,9 @@ docker push ghcr.io/catalystneuro/dendro_si_kilosort25:latest
 
 DOCKER_BUILDKIT=1 docker build -f si_kilosort3/Dockerfile -t ghcr.io/catalystneuro/dendro_si_kilosort3:latest .
 docker push ghcr.io/catalystneuro/dendro_si_kilosort3:latest
+
+DOCKER_BUILDKIT=1 docker build -f si_mountainsort5/Dockerfile -t ghcr.io/catalystneuro/dendro_si_mountainsort5:latest .
+docker push ghcr.io/catalystneuro/dendro_si_mountainsort5:latest
 ```
 
 ## Test locally

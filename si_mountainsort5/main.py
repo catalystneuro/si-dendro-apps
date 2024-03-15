@@ -21,6 +21,7 @@ app = App(
 
 # We need to overwrite this with the specific sorter, to generate the correct forms
 class PipelineContext(PipelineFullContext):
+    sorter_name: str = 'mountainsort5'
     spikesorting_context: MountainSort5SortingContext = Field(default=MountainSort5SortingContext())
 
 
