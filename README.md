@@ -4,6 +4,12 @@ SpikeInterface Apps for Dendro
 
 ## Dev
 
+For each Processor, create a symbolic link to the `common` folder.
+
+```shell
+ln -s ../common common
+```
+
 Create / update spec file:
 ```shell
 dendro make-app-spec-file --app-dir . --spec-output-file spec.json

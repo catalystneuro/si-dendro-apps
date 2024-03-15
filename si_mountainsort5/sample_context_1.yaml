@@ -1,0 +1,29 @@
+# https://api.dandiarchive.org/api/dandisets/000409/versions/draft/assets/c04f6b30-82bf-40e1-9210-34f0bcd8be24/
+input: https://dandiarchive.s3.amazonaws.com/blobs/2dd/3a3/2dd3a3b3-7ede-4f2b-a327-5c81bf5718da
+output: ./output/sorting_upload.nwb
+recording_context:
+  electrical_series_path: /acquisition/ElectricalSeriesAp
+  lazy_read_input: true
+  stub_test: true
+  stub_test_duration_sec: 50
+run_preprocessing: true
+preprocessing_context:
+  motion_correction:
+    strategy: skip
+    preset: nonrigid_accurate
+run_spikesorting: true
+spikesorting_context:
+  do_correction: false
+run_postprocessing: false
+postprocessing_context:
+  quality_metrics:
+    presence_ratio: true
+    snr: true
+    isi_violation: true
+    rp_violation: true
+    sliding_rp_violation: true
+    amplitude_cutoff: true
+    amplitude_median: true
+    nearest_neighbor: false
+    nn_isolation: false
+    nn_noise_overlap: false

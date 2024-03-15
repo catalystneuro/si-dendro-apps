@@ -68,6 +68,33 @@ class Kilosort3SortingContext(BaseModel):
     skip_kilosort_preprocessing: bool = Field(default=False, description="Can optionaly skip the internal kilosort preprocessing")
 
 
+class MountainSort5SortingContext(BaseModel):
+    scheme: str = Field(
+        default='2',
+        description="Sorting scheme",
+        json_schema_extra={'options': ["1", "2", "3"]}
+    )
+    detect_threshold: float = Field(default=5.5, description="Threshold for spike detection")
+    detect_sign: int = Field(default=-1, description="Sign of the peak")
+    detect_time_radius_msec: float = Field(default=0.5, description="Time radius in milliseconds")
+    snippet_T1: int = Field(default=20, description="Snippet T1")
+    snippet_T2: int = Field(default=20, description="Snippet T2")
+    npca_per_channel: int = Field(default=3, description="Number of PCA per channel")
+    npca_per_subdivision: int = Field(default=10, description="Number of PCA per subdivision")
+    snippet_mask_radius: int = Field(default=250, description="Snippet mask radius")
+    scheme1_detect_channel_radius: int = Field(default=150, description="Scheme 1 detect channel radius")
+    scheme2_phase1_detect_channel_radius: int = Field(default=200, description="Scheme 2 phase 1 detect channel radius")
+    scheme2_detect_channel_radius: int = Field(default=50, description="Scheme 2 detect channel radius")
+    scheme2_max_num_snippets_per_training_batch: int = Field(default=200, description="Scheme 2 max number of snippets per training batch")
+    scheme2_training_duration_sec: int = Field(default=300, description="Scheme 2 training duration in seconds")
+    scheme2_training_recording_sampling_mode: str = Field(default='uniform', description="Scheme 2 training recording sampling mode")
+    scheme3_block_duration_sec: int = Field(default=1800, description="Scheme 3 block duration in seconds")
+    freq_min: int = Field(default=300, description="High-pass filter cutoff frequency")
+    freq_max: int = Field(default=6000, description="Low-pass filter cutoff frequency")
+    filter: bool = Field(default=True, description="Enable or disable filter")
+    whiten: bool = Field(default=True, description="Enable or disable whiten")
+
+
 # ------------------------------
 # Pipeline Models
 # ------------------------------
@@ -90,6 +117,7 @@ class PipelineFullContext(BaseModel):
     spikesorting_context: Union[
         Kilosort25SortingContext,
         Kilosort3SortingContext,
+        MountainSort5SortingContext,
     ] = Field(description='Sorting context')
     run_postprocessing: bool = Field(default=True, description='Run postprocessing')
     postprocessing_context: PostprocessingContext = Field(default=PostprocessingContext(), description='Postprocessing context')
