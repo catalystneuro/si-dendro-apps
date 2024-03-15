@@ -1,0 +1,1539 @@
+{
+    "name": "si_mountainsort5",
+    "description": "Spike Interface Pipeline - Mountainsort 5",
+    "appImage": "ghcr.io/catalystneuro/dendro_si_mountainsort5",
+    "appExecutable": "/app/main.py",
+    "executable": "/app/main.py",
+    "processors": [
+        {
+            "name": "spikeinterface_pipeline_mountainsort5",
+            "description": "SpikeInterface Pipeline Processor for Mountainsort 5",
+            "label": "SpikeInterface Pipeline - Mountainsort 5",
+            "inputs": [
+                {
+                    "name": "input",
+                    "description": "Input NWB file"
+                }
+            ],
+            "inputFolders": [],
+            "outputs": [
+                {
+                    "name": "output",
+                    "description": "Output NWB file"
+                }
+            ],
+            "outputFolders": [],
+            "parameters": [
+                {
+                    "name": "job_kwargs.n_jobs",
+                    "description": "Number of jobs, must be a positive number between 0 and 1, or -1 for all processors.",
+                    "type": "float",
+                    "default": 0.8
+                },
+                {
+                    "name": "job_kwargs.chunk_duration",
+                    "description": "Chunk duration.",
+                    "type": "str",
+                    "default": "1s"
+                },
+                {
+                    "name": "job_kwargs.progress_bar",
+                    "description": "Show progress bar.",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "recording_context.electrical_series_path",
+                    "description": "Path to the electrical series in the NWB file",
+                    "type": "str"
+                },
+                {
+                    "name": "recording_context.lazy_read_input",
+                    "description": "Lazy read input file",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "recording_context.write_recording",
+                    "description": "Write recording",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "recording_context.stub_test",
+                    "description": "Stub test",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "recording_context.stub_test_duration_sec",
+                    "description": "Stub test duration in seconds",
+                    "type": "float",
+                    "default": 300
+                },
+                {
+                    "name": "run_preprocessing",
+                    "description": "Run preprocessing",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.add_preprocessed_to_output_nwb",
+                    "description": "Whether to add preprocessed data to output NWB file or not",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.preprocessing_strategy",
+                    "description": "Strategy for preprocessing",
+                    "type": "str",
+                    "default": "cmr"
+                },
+                {
+                    "name": "preprocessing_context.highpass_filter.freq_min",
+                    "description": "Minimum frequency for the highpass filter",
+                    "type": "float",
+                    "default": 300.0
+                },
+                {
+                    "name": "preprocessing_context.highpass_filter.margin_ms",
+                    "description": "Margin in milliseconds",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.phase_shift.margin_ms",
+                    "description": "Margin in milliseconds for phase shift",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.method",
+                    "description": "Method to detect bad channels",
+                    "type": "str",
+                    "default": "coherence+psd"
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.dead_channel_threshold",
+                    "description": "Threshold for dead channel",
+                    "type": "float",
+                    "default": -0.5
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.noisy_channel_threshold",
+                    "description": "Threshold for noisy channel",
+                    "type": "float",
+                    "default": 1.0
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.outside_channel_threshold",
+                    "description": "Threshold for outside channel",
+                    "type": "float",
+                    "default": -0.3
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.n_neighbors",
+                    "description": "Number of neighbors",
+                    "type": "int",
+                    "default": 11
+                },
+                {
+                    "name": "preprocessing_context.detect_bad_channels.seed",
+                    "description": "Seed value",
+                    "type": "int",
+                    "default": 0
+                },
+                {
+                    "name": "preprocessing_context.common_reference.reference",
+                    "description": "Type of reference",
+                    "type": "str",
+                    "default": "global"
+                },
+                {
+                    "name": "preprocessing_context.common_reference.operator",
+                    "description": "Operator used for common reference",
+                    "type": "str",
+                    "default": "median"
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.n_channel_pad",
+                    "description": "Number of channels to pad",
+                    "type": "int",
+                    "default": 60
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.n_channel_taper",
+                    "description": "Number of channels to taper",
+                    "type": "Optional[int]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.direction",
+                    "description": "Direction for the spatial filter",
+                    "type": "str",
+                    "default": "y"
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.apply_agc",
+                    "description": "Whether to apply automatic gain control",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.agc_window_length_s",
+                    "description": "Window length in seconds for AGC",
+                    "type": "float",
+                    "default": 0.01
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.highpass_butter_order",
+                    "description": "Order for the Butterworth filter",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "preprocessing_context.highpass_spatial_filter.highpass_butter_wn",
+                    "description": "Natural frequency for the Butterworth filter",
+                    "type": "float",
+                    "default": 0.01
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.strategy",
+                    "description": "What strategy to use for motion correction",
+                    "type": "str",
+                    "default": "compute",
+                    "options": [
+                        "skip",
+                        "compute",
+                        "apply"
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.preset",
+                    "description": "Preset for motion correction",
+                    "type": "str",
+                    "default": "nonrigid_accurate",
+                    "options": [
+                        "nonrigid_accurate",
+                        "rigid_fast",
+                        "kilosort_like"
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "locally_exclusive"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.peak_sign",
+                    "description": "",
+                    "type": "str",
+                    "default": "neg"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.detect_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 8.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.exclude_sweep_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.detect_kwargs.radius_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.radius_um",
+                    "description": "For channel sparsity.",
+                    "type": "float",
+                    "default": 75.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.max_distance_um",
+                    "description": "Boundary for distance estimation.",
+                    "type": "float",
+                    "default": 150.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.optimizer",
+                    "description": "",
+                    "type": "str",
+                    "default": "minimize_with_log_penality"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.enforce_decrease",
+                    "description": "Enforce spatial decreasingness for PTP vectors",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.localize_peaks_kwargs.feature",
+                    "description": "'ptp', 'energy' or 'peak_voltage'. The available features to consider for estimating the position via monopolar triangulation are peak-to-peak amplitudes (ptp, default), energy ('energy', as L2 norm) or voltages at the center of the waveform (peak_voltage)",
+                    "type": "str",
+                    "default": "ptp"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "decentralized"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.direction",
+                    "description": "",
+                    "type": "str",
+                    "default": "y"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.bin_duration_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.rigid",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.bin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.margin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.win_shape",
+                    "description": "",
+                    "type": "str",
+                    "default": "gaussian"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.win_step_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.win_sigma_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 200.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.histogram_depth_smooth_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.histogram_time_smooth_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.pairwise_displacement_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "conv"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.max_displacement_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.weight_scale",
+                    "description": "",
+                    "type": "str",
+                    "default": "linear"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.error_sigma",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.conv_engine",
+                    "description": "",
+                    "type": "str",
+                    "default": "numpy",
+                    "options": [
+                        "torch",
+                        "numpy"
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.torch_device",
+                    "description": "",
+                    "type": "str",
+                    "default": ""
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.batch_size",
+                    "description": "",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.corr_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.time_horizon_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.convergence_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "lsmr"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.soft_weights",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.normalized_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.centered_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.temporal_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.spatial_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.force_spatial_median_continuity",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.reference_displacement",
+                    "description": "",
+                    "type": "str",
+                    "default": "median"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.reference_displacement_time_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.robust_regression_sigma",
+                    "description": "",
+                    "type": "int",
+                    "default": 2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.estimate_motion_kwargs.weight_with_amplitude",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.direction",
+                    "description": "0 | 1 | 2. Dimension along which channel_locations are shifted (0 - x, 1 - y, 2 - z).",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.border_mode",
+                    "description": "'remove_channels' | 'force_extrapolate' | 'force_zeros'. Control how channels are handled on border.",
+                    "type": "str",
+                    "default": "remove_channels"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.spatial_interpolation_method",
+                    "description": "The spatial interpolation method used to interpolate the channel locations.",
+                    "type": "str",
+                    "default": "idw"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.sigma_um",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "float",
+                    "default": 20.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.p",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_nonrigid_accurate.interpolate_motion_kwargs.num_closest",
+                    "description": "Number of closest channels used by 'idw' method for interpolation.",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "locally_exclusive"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.peak_sign",
+                    "description": "",
+                    "type": "str",
+                    "default": "neg"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.detect_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 8.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.exclude_sweep_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.detect_kwargs.radius_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.localize_peaks_kwargs.radius_um",
+                    "description": "Radius in um for channel sparsity.",
+                    "type": "float",
+                    "default": 75.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.localize_peaks_kwargs.feature",
+                    "description": "'ptp', 'mean', 'energy' or 'peak_voltage'. Feature to consider for computation",
+                    "type": "str",
+                    "default": "ptp"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "decentralized"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.direction",
+                    "description": "",
+                    "type": "str",
+                    "default": "y"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.bin_duration_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.rigid",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.bin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.margin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.win_shape",
+                    "description": "",
+                    "type": "str",
+                    "default": "gaussian"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.win_step_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.win_sigma_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 200.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.histogram_depth_smooth_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.histogram_time_smooth_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.pairwise_displacement_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "conv"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.max_displacement_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.weight_scale",
+                    "description": "",
+                    "type": "str",
+                    "default": "linear"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.error_sigma",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.conv_engine",
+                    "description": "",
+                    "type": "str",
+                    "default": "numpy",
+                    "options": [
+                        "torch",
+                        "numpy"
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.torch_device",
+                    "description": "",
+                    "type": "str",
+                    "default": ""
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.batch_size",
+                    "description": "",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.corr_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.time_horizon_s",
+                    "description": "",
+                    "type": "Optional[float]",
+                    "default": null
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.convergence_method",
+                    "description": "",
+                    "type": "str",
+                    "default": "lsmr"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.soft_weights",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.normalized_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.centered_xcorr",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.temporal_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.spatial_prior",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.force_spatial_median_continuity",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.reference_displacement",
+                    "description": "",
+                    "type": "str",
+                    "default": "median"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.reference_displacement_time_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.robust_regression_sigma",
+                    "description": "",
+                    "type": "int",
+                    "default": 2
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.estimate_motion_kwargs.weight_with_amplitude",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.direction",
+                    "description": "0 | 1 | 2. Dimension along which channel_locations are shifted (0 - x, 1 - y, 2 - z).",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.border_mode",
+                    "description": "'remove_channels' | 'force_extrapolate' | 'force_zeros'. Control how channels are handled on border.",
+                    "type": "str",
+                    "default": "remove_channels"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.spatial_interpolation_method",
+                    "description": "The spatial interpolation method used to interpolate the channel locations.",
+                    "type": "str",
+                    "default": "idw"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.sigma_um",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "float",
+                    "default": 20.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.p",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_rigid_fast.interpolate_motion_kwargs.num_closest",
+                    "description": "Number of closest channels used by 'idw' method for interpolation.",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.method",
+                    "description": "",
+                    "type": "str",
+                    "default": "locally_exclusive"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.peak_sign",
+                    "description": "",
+                    "type": "str",
+                    "default": "neg"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.detect_threshold",
+                    "description": "",
+                    "type": "float",
+                    "default": 8.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.exclude_sweep_ms",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.detect_kwargs.radius_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.radius_um",
+                    "description": "Radius in um for channel sparsity.",
+                    "type": "float",
+                    "default": 40.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.upsampling_um",
+                    "description": "Upsampling resolution for the grid of templates.",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.sigma_um",
+                    "description": "Spatial decays of the fake templates.",
+                    "type": "List[float]",
+                    "default": [
+                        5.0,
+                        25.0,
+                        5
+                    ]
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.sigma_ms",
+                    "description": "The temporal decay of the fake templates.",
+                    "type": "float",
+                    "default": 0.25
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.margin_um",
+                    "description": "The margin for the grid of fake templates.",
+                    "type": "float",
+                    "default": 30.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.percentile",
+                    "description": "The percentage in [0, 100] of the best scalar products kept to estimate the position.",
+                    "type": "float",
+                    "default": 10.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.localize_peaks_kwargs.sparsity_threshold",
+                    "description": "The sparsity threshold (in [0, 1]) below which weights should be considered as 0.",
+                    "type": "float",
+                    "default": 0.01
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.bin_duration_s",
+                    "description": "",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.rigid",
+                    "description": "",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.win_step_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 50.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.win_sigma_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 150.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.margin_um",
+                    "description": "",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.estimate_motion_kwargs.win_shape",
+                    "description": "",
+                    "type": "str",
+                    "default": "rect"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.direction",
+                    "description": "0 | 1 | 2. Dimension along which channel_locations are shifted (0 - x, 1 - y, 2 - z).",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.border_mode",
+                    "description": "'remove_channels' | 'force_extrapolate' | 'force_zeros'. Control how channels are handled on border.",
+                    "type": "str",
+                    "default": "remove_channels"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.spatial_interpolation_method",
+                    "description": "The spatial interpolation method used to interpolate the channel locations.",
+                    "type": "str",
+                    "default": "idw"
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.sigma_um",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "float",
+                    "default": 20.0
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.p",
+                    "description": "Used in the 'kriging' formula",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "preprocessing_context.motion_correction.motion_kwargs_kilosort_like.interpolate_motion_kwargs.num_closest",
+                    "description": "Number of closest channels used by 'idw' method for interpolation.",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "preprocessing_context.remove_out_channels",
+                    "description": "Flag to remove out channels",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.remove_bad_channels",
+                    "description": "Flag to remove bad channels",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "preprocessing_context.max_bad_channel_fraction_to_remove",
+                    "description": "Maximum fraction of bad channels to remove",
+                    "type": "float",
+                    "default": 1.1
+                },
+                {
+                    "name": "run_spikesorting",
+                    "description": "Run spike sorting",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "spikesorting_context.scheme",
+                    "description": "Sorting scheme",
+                    "type": "str",
+                    "default": "2",
+                    "options": [
+                        "1",
+                        "2",
+                        "3"
+                    ]
+                },
+                {
+                    "name": "spikesorting_context.detect_threshold",
+                    "description": "Threshold for spike detection",
+                    "type": "float",
+                    "default": 5.5
+                },
+                {
+                    "name": "spikesorting_context.detect_sign",
+                    "description": "Sign of the peak",
+                    "type": "int",
+                    "default": -1
+                },
+                {
+                    "name": "spikesorting_context.detect_time_radius_msec",
+                    "description": "Time radius in milliseconds",
+                    "type": "float",
+                    "default": 0.5
+                },
+                {
+                    "name": "spikesorting_context.snippet_T1",
+                    "description": "Snippet T1",
+                    "type": "int",
+                    "default": 20
+                },
+                {
+                    "name": "spikesorting_context.snippet_T2",
+                    "description": "Snippet T2",
+                    "type": "int",
+                    "default": 20
+                },
+                {
+                    "name": "spikesorting_context.npca_per_channel",
+                    "description": "Number of PCA per channel",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "spikesorting_context.npca_per_subdivision",
+                    "description": "Number of PCA per subdivision",
+                    "type": "int",
+                    "default": 10
+                },
+                {
+                    "name": "spikesorting_context.snippet_mask_radius",
+                    "description": "Snippet mask radius",
+                    "type": "int",
+                    "default": 250
+                },
+                {
+                    "name": "spikesorting_context.scheme1_detect_channel_radius",
+                    "description": "Scheme 1 detect channel radius",
+                    "type": "int",
+                    "default": 150
+                },
+                {
+                    "name": "spikesorting_context.scheme2_phase1_detect_channel_radius",
+                    "description": "Scheme 2 phase 1 detect channel radius",
+                    "type": "int",
+                    "default": 200
+                },
+                {
+                    "name": "spikesorting_context.scheme2_detect_channel_radius",
+                    "description": "Scheme 2 detect channel radius",
+                    "type": "int",
+                    "default": 50
+                },
+                {
+                    "name": "spikesorting_context.scheme2_max_num_snippets_per_training_batch",
+                    "description": "Scheme 2 max number of snippets per training batch",
+                    "type": "int",
+                    "default": 200
+                },
+                {
+                    "name": "spikesorting_context.scheme2_training_duration_sec",
+                    "description": "Scheme 2 training duration in seconds",
+                    "type": "int",
+                    "default": 300
+                },
+                {
+                    "name": "spikesorting_context.scheme2_training_recording_sampling_mode",
+                    "description": "Scheme 2 training recording sampling mode",
+                    "type": "str",
+                    "default": "uniform"
+                },
+                {
+                    "name": "spikesorting_context.scheme3_block_duration_sec",
+                    "description": "Scheme 3 block duration in seconds",
+                    "type": "int",
+                    "default": 1800
+                },
+                {
+                    "name": "spikesorting_context.freq_min",
+                    "description": "High-pass filter cutoff frequency",
+                    "type": "int",
+                    "default": 300
+                },
+                {
+                    "name": "spikesorting_context.freq_max",
+                    "description": "Low-pass filter cutoff frequency",
+                    "type": "int",
+                    "default": 6000
+                },
+                {
+                    "name": "spikesorting_context.filter",
+                    "description": "Enable or disable filter",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "spikesorting_context.whiten",
+                    "description": "Enable or disable whiten",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "run_postprocessing",
+                    "description": "Run postprocessing",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.sparsity.method",
+                    "description": "Method for determining sparsity.",
+                    "type": "str",
+                    "default": "radius"
+                },
+                {
+                    "name": "postprocessing_context.sparsity.radius_um",
+                    "description": "Radius in micrometers for sparsity.",
+                    "type": "int",
+                    "default": 100
+                },
+                {
+                    "name": "postprocessing_context.waveforms_raw.ms_before",
+                    "description": "Milliseconds before",
+                    "type": "float",
+                    "default": 1.0
+                },
+                {
+                    "name": "postprocessing_context.waveforms_raw.ms_after",
+                    "description": "Milliseconds after",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "postprocessing_context.waveforms_raw.max_spikes_per_unit",
+                    "description": "Maximum spikes per unit",
+                    "type": "int",
+                    "default": 100
+                },
+                {
+                    "name": "postprocessing_context.waveforms_raw.return_scaled",
+                    "description": "Flag to determine if results should be scaled",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.waveforms_raw.use_relative_path",
+                    "description": "Use relative paths",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.waveforms.ms_before",
+                    "description": "Milliseconds before",
+                    "type": "float",
+                    "default": 3.0
+                },
+                {
+                    "name": "postprocessing_context.waveforms.ms_after",
+                    "description": "Milliseconds after",
+                    "type": "float",
+                    "default": 4.0
+                },
+                {
+                    "name": "postprocessing_context.waveforms.max_spikes_per_unit",
+                    "description": "Maximum spikes per unit",
+                    "type": "int",
+                    "default": 500
+                },
+                {
+                    "name": "postprocessing_context.waveforms.return_scaled",
+                    "description": "Flag to determine if results should be scaled",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.waveforms.use_relative_path",
+                    "description": "Use relative paths",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.spike_amplitudes.peak_sign",
+                    "description": "Sign of the peaks.",
+                    "type": "str",
+                    "default": "neg",
+                    "options": [
+                        "neg",
+                        "pos",
+                        "both"
+                    ]
+                },
+                {
+                    "name": "postprocessing_context.spike_amplitudes.return_scaled",
+                    "description": "Flag to determine if amplitudes should be scaled",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.spike_amplitudes.outputs",
+                    "description": "Output format for the spike amplitudes",
+                    "type": "str",
+                    "default": "concatenated"
+                },
+                {
+                    "name": "postprocessing_context.similarity.method",
+                    "description": "Method to compute similarity",
+                    "type": "str",
+                    "default": "cosine_similarity"
+                },
+                {
+                    "name": "postprocessing_context.correlograms.window_ms",
+                    "description": "Size of the window in milliseconds",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "postprocessing_context.correlograms.bin_ms",
+                    "description": "Size of the bin in milliseconds",
+                    "type": "float",
+                    "default": 2.0
+                },
+                {
+                    "name": "postprocessing_context.isis.window_ms",
+                    "description": "Size of the window in milliseconds",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "postprocessing_context.isis.bin_ms",
+                    "description": "Size of the bin in milliseconds",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "postprocessing_context.locations.method",
+                    "description": "Method to determine locations",
+                    "type": "str",
+                    "default": "monopolar_triangulation"
+                },
+                {
+                    "name": "postprocessing_context.template_metrics.upsampling_factor",
+                    "description": "Upsampling factor",
+                    "type": "int",
+                    "default": 10
+                },
+                {
+                    "name": "postprocessing_context.principal_components.n_components",
+                    "description": "Number of principal components",
+                    "type": "int",
+                    "default": 5
+                },
+                {
+                    "name": "postprocessing_context.principal_components.mode",
+                    "description": "Mode of principal component analysis",
+                    "type": "str",
+                    "default": "by_channel_local"
+                },
+                {
+                    "name": "postprocessing_context.principal_components.whiten",
+                    "description": "Whiten the components",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.presence_ratio",
+                    "description": "Presence ratio.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.snr",
+                    "description": "Signal to noise ratio.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.isi_violation",
+                    "description": "ISI violation.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.rp_violation",
+                    "description": "Refractory period violation.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.sliding_rp_violation",
+                    "description": "Sliding refractory period violation.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.amplitude_cutoff",
+                    "description": "Amplitude cutoff.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.amplitude_median",
+                    "description": "Amplitude median.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.nearest_neighbor",
+                    "description": "Nearest neighbor.",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.nn_isolation",
+                    "description": "Nearest neighbor isolation.",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.nn_noise_overlap",
+                    "description": "Nearest neighbor noise overlap.",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.presence_ratio.bin_duration_s",
+                    "description": "Duration of the bin in seconds.",
+                    "type": "float",
+                    "default": 60
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.snr.peak_sign",
+                    "description": "Sign of the peaks.",
+                    "type": "str",
+                    "default": "neg",
+                    "options": [
+                        "neg",
+                        "pos",
+                        "both"
+                    ]
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.snr.peak_mode",
+                    "description": "Mode of the peak.",
+                    "type": "str",
+                    "default": "extremum"
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.isi_violation.isi_threshold_ms",
+                    "description": "ISI threshold in milliseconds.",
+                    "type": "float",
+                    "default": 1.5
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.isi_violation.min_isi_ms",
+                    "description": "Minimum ISI in milliseconds.",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.rp_violation.refractory_period_ms",
+                    "description": "Refractory period in milliseconds.",
+                    "type": "float",
+                    "default": 1.0
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.rp_violation.censored_period_ms",
+                    "description": "Censored period in milliseconds.",
+                    "type": "float",
+                    "default": 0.0
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.sliding_rp_violation.bin_size_ms",
+                    "description": "The size of binning for the autocorrelogram in ms, by default 0.25.",
+                    "type": "float",
+                    "default": 0.25
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.sliding_rp_violation.window_size_s",
+                    "description": "Window in seconds to compute correlogram, by default 1.",
+                    "type": "float",
+                    "default": 1
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.sliding_rp_violation.exclude_ref_period_below_ms",
+                    "description": "Refractory periods below this value are excluded, by default 0.5",
+                    "type": "float",
+                    "default": 0.5
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.sliding_rp_violation.max_ref_period_ms",
+                    "description": "Maximum refractory period to test in ms, by default 10 ms.",
+                    "type": "float",
+                    "default": 10
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.amplitude_cutoff.peak_sign",
+                    "description": "Sign of the peaks.",
+                    "type": "str",
+                    "default": "neg",
+                    "options": [
+                        "neg",
+                        "pos",
+                        "both"
+                    ]
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.amplitude_cutoff.num_histogram_bins",
+                    "description": "The number of bins to use to compute the amplitude histogram.",
+                    "type": "int",
+                    "default": 100
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.amplitude_cutoff.histogram_smoothing_value",
+                    "description": "Controls the smoothing applied to the amplitude histogram.",
+                    "type": "int",
+                    "default": 3
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.amplitude_cutoff.amplitudes_bins_min_ratio",
+                    "description": "The minimum ratio between number of amplitudes for a unit and the number of bins. If the ratio is less than this threshold, the amplitude_cutoff for the unit is set to NaN.",
+                    "type": "int",
+                    "default": 5
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.amplitude_median.peak_sign",
+                    "description": "Sign of the peaks.",
+                    "type": "str",
+                    "default": "neg",
+                    "options": [
+                        "neg",
+                        "pos",
+                        "both"
+                    ]
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nearest_neighbor.max_spikes",
+                    "description": "The number of spikes to use, per cluster. Note that the calculation can be very slow when this number is >20000.",
+                    "type": "int",
+                    "default": 10000
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nearest_neighbor.min_spikes",
+                    "description": "Minimum number of spikes.",
+                    "type": "int",
+                    "default": 10
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nearest_neighbor.n_neighbors",
+                    "description": "The number of neighbors to use.",
+                    "type": "int",
+                    "default": 4
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_isolation.max_spikes",
+                    "description": "The number of spikes to use, per cluster. Note that the calculation can be very slow when this number is >20000.",
+                    "type": "int",
+                    "default": 10000
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_isolation.min_spikes",
+                    "description": "Minimum number of spikes.",
+                    "type": "int",
+                    "default": 10
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_isolation.n_neighbors",
+                    "description": "The number of neighbors to use.",
+                    "type": "int",
+                    "default": 4
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_isolation.n_components",
+                    "description": "The number of PC components to use to project the snippets to.",
+                    "type": "int",
+                    "default": 10
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_isolation.radius_um",
+                    "description": "The radius, in um, that channels need to be within the peak channel to be included.",
+                    "type": "int",
+                    "default": 100
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_noise_overlap.max_spikes",
+                    "description": "The number of spikes to use, per cluster. Note that the calculation can be very slow when this number is >20000.",
+                    "type": "int",
+                    "default": 10000
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_noise_overlap.min_spikes",
+                    "description": "Minimum number of spikes.",
+                    "type": "int",
+                    "default": 10
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_noise_overlap.n_neighbors",
+                    "description": "The number of neighbors to use.",
+                    "type": "int",
+                    "default": 4
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_noise_overlap.n_components",
+                    "description": "The number of PC components to use to project the snippets to.",
+                    "type": "int",
+                    "default": 10
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.qm_params.nn_noise_overlap.radius_um",
+                    "description": "The radius, in um, that channels need to be within the peak channel to be included.",
+                    "type": "int",
+                    "default": 100
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.n_jobs",
+                    "description": "Number of jobs.",
+                    "type": "int",
+                    "default": 1
+                },
+                {
+                    "name": "postprocessing_context.duplicate_threshold",
+                    "description": "Duplicate threshold",
+                    "type": "float",
+                    "default": 0.9
+                },
+                {
+                    "name": "run_curation",
+                    "description": "Run curation",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "curation_context.curation_query",
+                    "description": "Query to select units to keep after curation. Default is 'isi_violations_ratio < 0.5 and amplitude_cutoff < 0.1 and presence_ratio > 0.8'.",
+                    "type": "str",
+                    "default": "isi_violations_ratio < 0.5 and amplitude_cutoff < 0.1 and presence_ratio > 0.8"
+                },
+                {
+                    "name": "run_visualization",
+                    "description": "Run visualization",
+                    "type": "bool",
+                    "default": true
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "wip",
+                    "value": true
+                }
+            ],
+            "tags": [
+                {
+                    "tag": "spike_sorting"
+                },
+                {
+                    "tag": "spike_sorter"
+                },
+                {
+                    "tag": "spike_interface"
+                },
+                {
+                    "tag": "electrophysiology"
+                },
+                {
+                    "tag": "pipeline"
+                }
+            ]
+        }
+    ]
+}
