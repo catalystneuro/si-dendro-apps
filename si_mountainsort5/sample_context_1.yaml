@@ -5,7 +5,7 @@ recording_context:
   electrical_series_path: /acquisition/ElectricalSeriesAp
   lazy_read_input: true
   stub_test: true
-  stub_test_duration_sec: 50
+  stub_test_duration_sec: 300
 run_preprocessing: true
 preprocessing_context:
   motion_correction:
@@ -15,7 +15,7 @@ run_spikesorting: true
 sorter_name: mountainsort5
 spikesorting_context:
   scheme: "2"
-run_postprocessing: false
+run_postprocessing: true
 postprocessing_context:
   quality_metrics:
     presence_ratio: true
