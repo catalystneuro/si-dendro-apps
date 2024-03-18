@@ -161,21 +161,5 @@ def run_pipeline(context: PipelineFullContext):
                 # metadata=metadata_dict,
             )
 
-        # h5_file = h5py.File(ff, 'r')
-        # with pynwb.NWBHDF5IO(file=h5_file, mode='r', load_namespaces=True) as io:
-        #     nwbfile_rec = io.read()
-
-        #     if not os.path.exists('output'):
-        #         os.mkdir('output')
-
-        #     output_fname = 'output/output.nwb'
-
-        #     create_sorting_out_nwb_file(
-        #         nwbfile_original=nwbfile_rec,
-        #         recording=recording_preprocessed,
-        #         sorting=sorting_curated if run_curation else sorting,
-        #         output_fname=output_fname
-        #     )
-
         logger.info('Uploading output NWB file')
         context.output.upload(output_fname)
