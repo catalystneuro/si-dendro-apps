@@ -1,6 +1,6 @@
 from spikeinterface_pipelines import pipeline as si_pipeline
 from spikeinterface.extractors import NwbRecordingExtractor
-from neuroconv.tools.spikeinterface import write_waveforms
+from neuroconv.tools.spikeinterface import write_waveforms, write_sorting
 from pathlib import Path
 import os
 import pynwb
@@ -147,6 +147,14 @@ def run_pipeline(context: PipelineFullContext):
         if waveform_extractor is not None:
             write_waveforms(
                 waveform_extractor=waveform_extractor,
+                nwbfile_path=Path(output_fname).resolve(),
+                nwbfile=nwbfile_base,
+                write_as="processing",
+                # metadata=metadata_dict,
+            )
+        else:
+            write_sorting(
+                sorting=sorting,
                 nwbfile_path=Path(output_fname).resolve(),
                 nwbfile=nwbfile_base,
                 write_as="processing",

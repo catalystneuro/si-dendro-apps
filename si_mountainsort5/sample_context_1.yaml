@@ -6,7 +6,7 @@ recording_context:
   lazy_read_input: true
   stub_test: true
   stub_test_duration_sec: 10
-run_preprocessing: false
+run_preprocessing: true
 preprocessing_context:
   motion_correction:
     strategy: skip
