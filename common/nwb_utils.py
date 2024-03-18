@@ -2,6 +2,29 @@ from pynwb import NWBFile
 from pynwb.file import Subject
 from uuid import uuid4
 
+
+def create_base_nwb_file(nwbfile_original: NWBFile) -> NWBFile:
+    return NWBFile(
+        session_description=nwbfile_original.session_description + " - spike sorting results.",
+        identifier=str(uuid4()),
+        session_start_time=nwbfile_original.session_start_time,
+        session_id=nwbfile_original.session_id,
+        experimenter=nwbfile_original.experimenter,
+        lab=nwbfile_original.lab,
+        institution=nwbfile_original.institution,
+        experiment_description=nwbfile_original.experiment_description,
+        related_publications=nwbfile_original.related_publications,
+        subject=Subject(
+            subject_id=nwbfile_original.subject.subject_id,
+            age=nwbfile_original.subject.age,
+            description=nwbfile_original.subject.description,
+            species=nwbfile_original.subject.species,
+            sex=nwbfile_original.subject.sex,
+        )
+    )
+
+# OLD CODE, LEAVING AS REFERENCE FOR NOW -------------------------------------
+
 # from typing import Union, List, Optional
 # # from neuroconv.tools.spikeinterface import write_sorting
 # import numpy as np
@@ -149,23 +172,3 @@ from uuid import uuid4
 #     #     overwrite=True
 #     # )
 
-
-def create_base_nwb_file(nwbfile_original: NWBFile) -> NWBFile:
-    return NWBFile(
-        session_description=nwbfile_original.session_description + " - spike sorting results.",
-        identifier=str(uuid4()),
-        session_start_time=nwbfile_original.session_start_time,
-        session_id=nwbfile_original.session_id,
-        experimenter=nwbfile_original.experimenter,
-        lab=nwbfile_original.lab,
-        institution=nwbfile_original.institution,
-        experiment_description=nwbfile_original.experiment_description,
-        related_publications=nwbfile_original.related_publications,
-        subject=Subject(
-            subject_id=nwbfile_original.subject.subject_id,
-            age=nwbfile_original.subject.age,
-            description=nwbfile_original.subject.description,
-            species=nwbfile_original.subject.species,
-            sex=nwbfile_original.subject.sex,
-        )
-    )
