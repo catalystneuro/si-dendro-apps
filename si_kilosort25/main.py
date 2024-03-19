@@ -2,10 +2,8 @@
 
 from dendro.sdk import App, ProcessorBase
 from pydantic import Field
-from common.models import (
-    Kilosort25SortingContext,
-    PipelineFullContext
-)
+from common.models import PipelineFullContext
+from common.models_sorting import Kilosort25SortingContext
 from common.processor_pipeline import run_pipeline
 
 
