@@ -13,13 +13,24 @@ def create_base_nwb_file(nwbfile_original: NWBFile) -> NWBFile:
         lab=nwbfile_original.lab,
         institution=nwbfile_original.institution,
         experiment_description=nwbfile_original.experiment_description,
+        keywords=nwbfile_original.keywords,
+        notes=nwbfile_original.notes,
+        pharmacology=nwbfile_original.pharmacology,
+        protocol=nwbfile_original.protocol,
         related_publications=nwbfile_original.related_publications,
+        data_collection=nwbfile_original.data_collection,
+        surgery=nwbfile_original.surgery,
+        virus=nwbfile_original.virus,
         subject=Subject(
-            subject_id=nwbfile_original.subject.subject_id,
             age=nwbfile_original.subject.age,
             description=nwbfile_original.subject.description,
-            species=nwbfile_original.subject.species,
+            genotype=nwbfile_original.subject.genotype,
             sex=nwbfile_original.subject.sex,
+            species=nwbfile_original.subject.species,
+            subject_id=nwbfile_original.subject.subject_id,
+            weight=nwbfile_original.subject.weight,
+            date_of_birth=nwbfile_original.subject.date_of_birth,
+            strain=nwbfile_original.subject.strain,
         )
     )
 
