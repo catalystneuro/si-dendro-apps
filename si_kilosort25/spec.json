@@ -946,6 +946,12 @@
                     "default": true
                 },
                 {
+                    "name": "sorter_name",
+                    "description": null,
+                    "type": "str",
+                    "default": "kilosort25"
+                },
+                {
                     "name": "spikesorting_context.detect_threshold",
                     "description": "Threshold for spike detection",
                     "type": "float",

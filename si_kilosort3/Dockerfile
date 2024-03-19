@@ -12,6 +12,11 @@ RUN git clone https://github.com/SpikeInterface/spikeinterface_pipelines.git && 
     # git checkout dev && \
     pip install -e .
 
+# Install neuroconv from source, for now
+RUN git clone https://github.com/catalystneuro/neuroconv.git && \
+    cd neuroconv && \
+    pip install -e .
+
 # # Install spikeinterface from source, for now
 # RUN git clone https://github.com/SpikeInterface/spikeinterface.git && \
 #     cd spikeinterface && \

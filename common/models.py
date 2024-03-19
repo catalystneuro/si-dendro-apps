@@ -1,10 +1,16 @@
 from dendro.sdk import InputFile, OutputFile
 from pydantic import BaseModel, Field
-from typing import List, Union
+from typing import Union
 
 from .models_preprocessing import PreprocessingContext
 from .models_postprocessing import PostprocessingContext
 from .models_curation import CurationContext
+from .models_sorting import (
+    Kilosort25SortingContext,
+    Kilosort3SortingContext,
+    MountainSort5SortingContext,
+    SpykingCircusModel,
+)
 
 
 class RecordingContext(BaseModel):
@@ -19,53 +25,6 @@ class JobKwargs(BaseModel):
     n_jobs: float = Field(default=0.8, description='Number of jobs, must be a positive number between 0 and 1, or -1 for all processors.')
     chunk_duration: str = Field(default='1s', description='Chunk duration.')
     progress_bar: bool = Field(default=False, description='Show progress bar.')
-
-
-# ------------------------------
-# Sorter Models
-# ------------------------------
-class Kilosort25SortingContext(BaseModel):
-    detect_threshold: float = Field(default=6, description="Threshold for spike detection")
-    projection_threshold: List[int] = Field(default=[10, 4], description="Threshold on projections")
-    preclust_threshold: float = Field(default=8, description="Threshold crossings for pre-clustering (in PCA projection space)")
-    car: bool = Field(default=True, description="Enable or disable common reference")
-    minFR: float = Field(default=0.1, description="Minimum spike rate (Hz), if a cluster falls below this for too long it gets removed")
-    minfr_goodchannels: float = Field(default=0.1, description="Minimum firing rate on a 'good' channel")
-    nblocks: int = Field(default=5, description="blocks for registration. 0 turns it off, 1 does rigid registration. Replaces 'datashift' option.")
-    sig: float = Field(default=20, description="spatial smoothness constant for registration")
-    freq_min: float = Field(default=150, description="High-pass filter cutoff frequency")
-    sigmaMask: float = Field(default=30, description="Spatial constant in um for computing residual variance of spike")
-    lam: float = Field(default=10.0, description="The importance of the amplitude penalty (like in Kilosort1: 0 means not used, 10 is average, 50 is a lot)")
-    nPCs: int = Field(default=3, description="Number of PCA dimensions")
-    ntbuff: int = Field(default=64, description="Samples of symmetrical buffer for whitening and spike detection")
-    nfilt_factor: int = Field(default=4, description="Max number of clusters per good channel (even temporary ones) 4")
-    AUCsplit: float = Field(default=0.9, description="Threshold on the area under the curve (AUC) criterion for performing a split in the final step")
-    do_correction: bool = Field(default=True, description="If True drift registration is applied")
-    wave_length: float = Field(default=61, description="size of the waveform extracted around each detected peak, (Default 61, maximum 81)")
-    keep_good_only: bool = Field(default=False, description="If True only 'good' units are returned")
-    skip_kilosort_preprocessing: bool = Field(default=False, description="Can optionaly skip the internal kilosort preprocessing")
-
-
-class Kilosort3SortingContext(BaseModel):
-    detect_threshold: float = Field(default=6, description="Threshold for spike detection")
-    projection_threshold: List[int] = Field(default=[9, 9], description="Threshold on projections")
-    preclust_threshold: float = Field(default=8, description="Threshold crossings for pre-clustering (in PCA projection space)")
-    car: bool = Field(default=True, description="Enable or disable common reference")
-    minFR: float = Field(default=0.2, description="Minimum spike rate (Hz), if a cluster falls below this for too long it gets removed")
-    minfr_goodchannels: float = Field(default=0.2, description="Minimum firing rate on a 'good' channel")
-    nblocks: int = Field(default=5, description="blocks for registration. 0 turns it off, 1 does rigid registration. Replaces 'datashift' option.")
-    sig: float = Field(default=20, description="spatial smoothness constant for registration")
-    freq_min: float = Field(default=300, description="High-pass filter cutoff frequency")
-    sigmaMask: float = Field(default=30, description="Spatial constant in um for computing residual variance of spike")
-    lam: float = Field(default=20.0, description="The importance of the amplitude penalty (like in Kilosort1: 0 means not used, 10 is average, 50 is a lot)")
-    nPCs: int = Field(default=3, description="Number of PCA dimensions")
-    ntbuff: int = Field(default=64, description="Samples of symmetrical buffer for whitening and spike detection")
-    nfilt_factor: int = Field(default=4, description="Max number of clusters per good channel (even temporary ones) 4")
-    AUCsplit: float = Field(default=0.8, description="Threshold on the area under the curve (AUC) criterion for performing a split in the final step")
-    do_correction: bool = Field(default=True, description="If True drift registration is applied")
-    wave_length: float = Field(default=61, description="size of the waveform extracted around each detected peak, (Default 61, maximum 81)")
-    keep_good_only: bool = Field(default=False, description="If True only 'good' units are returned")
-    skip_kilosort_preprocessing: bool = Field(default=False, description="Can optionaly skip the internal kilosort preprocessing")
 
 
 # ------------------------------
@@ -87,27 +46,23 @@ class PipelineFullContext(BaseModel):
     run_preprocessing: bool = Field(default=True, description='Run preprocessing')
     preprocessing_context: PreprocessingContext = Field(default=PreprocessingContext(), description='Preprocessing context')
     run_spikesorting: bool = Field(default=True, description='Run spike sorting')
+    sorter_name: str = Field(
+        default='mountainsort5',
+        description="Name of the sorter to use.",
+        json_schema_extra={'options': ["kilosort2_5", "kilosort3", "mountainsort5"]}
+    )
     spikesorting_context: Union[
         Kilosort25SortingContext,
         Kilosort3SortingContext,
-    ] = Field(description='Sorting context')
+        MountainSort5SortingContext,
+        SpykingCircusModel,
+    ] = Field(description='Sorting context', union_mode="left_to_right")
     run_postprocessing: bool = Field(default=True, description='Run postprocessing')
     postprocessing_context: PostprocessingContext = Field(default=PostprocessingContext(), description='Postprocessing context')
     run_curation: bool = Field(default=True, description='Run curation')
     curation_context: CurationContext = Field(default=CurationContext(), description='Curation context')
     run_visualization: bool = Field(default=True, description='Run visualization')
     # visualization_context: VisualizationContext = Field(default=VisualizationContext(), description='Visualization context')
-
-
-
-# # ------------------------------
-# # Curation Models
-# # ------------------------------
-# class CurationKwargs:
-#     duplicate_threshold: float = Field(0.9, description="Threshold for duplicate units")
-#     isi_violations_ratio_threshold: float = Field(0.5, description="Threshold for ISI violations ratio")
-#     presence_ratio_threshold: float = Field(0.8, description="Threshold for presence ratio")
-#     amplitude_cutoff_threshold: float = Field(0.1, description="Threshold for amplitude cutoff")
 
 
 # # ------------------------------

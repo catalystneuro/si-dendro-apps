@@ -4,6 +4,12 @@ SpikeInterface Apps for Dendro
 
 ## Dev
 
+For each Processor, create a symbolic link to the `common` folder.
+
+```shell
+ln -s ../common common
+```
+
 Create / update spec file:
 ```shell
 dendro make-app-spec-file --app-dir . --spec-output-file spec.json
@@ -21,6 +27,9 @@ docker push ghcr.io/catalystneuro/dendro_si_kilosort25:latest
 
 DOCKER_BUILDKIT=1 docker build -f si_kilosort3/Dockerfile -t ghcr.io/catalystneuro/dendro_si_kilosort3:latest .
 docker push ghcr.io/catalystneuro/dendro_si_kilosort3:latest
+
+DOCKER_BUILDKIT=1 docker build -f si_mountainsort5/Dockerfile -t ghcr.io/catalystneuro/dendro_si_mountainsort5:latest .
+docker push ghcr.io/catalystneuro/dendro_si_mountainsort5:latest
 ```
 
 ## Test locally

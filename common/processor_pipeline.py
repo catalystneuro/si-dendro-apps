@@ -1,5 +1,6 @@
 from spikeinterface_pipelines import pipeline as si_pipeline
 from spikeinterface.extractors import NwbRecordingExtractor
+from neuroconv.tools.spikeinterface import write_waveforms, write_sorting
 from pathlib import Path
 import os
 import pynwb
@@ -7,7 +8,7 @@ import h5py
 import logging
 
 from .models import PipelineFullContext
-from .nwb_utils import create_sorting_out_nwb_file
+from .nwb_utils import create_base_nwb_file
 
 
 logging.basicConfig(level=logging.INFO)
@@ -73,7 +74,9 @@ def run_pipeline(context: PipelineFullContext):
 
     # Spikesorting params
     run_spikesorting = context.run_spikesorting
-    spikesorting_params = context.spikesorting_context.model_dump()
+    spikesorting_params = dict()
+    spikesorting_params["sorter_name"] = context.sorter_name
+    spikesorting_params["sorter_kwargs"] = context.spikesorting_context.model_dump()
 
     # Postprocessing params
     run_postprocessing = context.run_postprocessing
@@ -130,20 +133,32 @@ def run_pipeline(context: PipelineFullContext):
     # Upload output file
     if sorting:
         logger.info('Writing output NWB file')
+        if not os.path.exists('output'):
+            os.mkdir('output')
+
+        output_fname = 'output/output.nwb'
+
         h5_file = h5py.File(ff, 'r')
         with pynwb.NWBHDF5IO(file=h5_file, mode='r', load_namespaces=True) as io:
             nwbfile_rec = io.read()
 
-            if not os.path.exists('output'):
-                os.mkdir('output')
+            nwbfile_base = create_base_nwb_file(nwbfile_original=nwbfile_rec)
 
-            output_fname = 'output/output.nwb'
-
-            create_sorting_out_nwb_file(
-                nwbfile_original=nwbfile_rec,
-                recording=recording_preprocessed,
-                sorting=sorting_curated if run_curation else sorting,
-                output_fname=output_fname
+        if waveform_extractor is not None:
+            write_waveforms(
+                waveform_extractor=waveform_extractor,
+                nwbfile_path=Path(output_fname).resolve(),
+                nwbfile=nwbfile_base,
+                write_as="processing",
+                # metadata=metadata_dict,
+            )
+        else:
+            write_sorting(
+                sorting=sorting,
+                nwbfile_path=Path(output_fname).resolve(),
+                nwbfile=nwbfile_base,
+                write_as="processing",
+                # metadata=metadata_dict,
             )
 
         logger.info('Uploading output NWB file')

@@ -1,4 +1,4 @@
-FROM spikeinterface/kilosort2_5-compiled-base:0.2.0
+FROM spikeinterface/mountainsort5-base:0.5.3
 
 # Install Dendro from source, for now
 WORKDIR /src
@@ -24,13 +24,13 @@ RUN git clone https://github.com/catalystneuro/neuroconv.git && \
 #     pip install -e .[full]
 
 # Install spikeinterface
-RUN pip install spikeinterface[full]==0.100.0
+RUN pip install spikeinterface[full]==0.100.1
 
 # Copy files into the container
 WORKDIR /app
 COPY /common /app/common
-COPY si_kilosort25/*.py /app/
-COPY si_kilosort25/requirements.txt /app/requirements.txt
+COPY si_mountainsort5/*.py /app/
+COPY si_mountainsort5/requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
 # Give execution permission to /app/main.py

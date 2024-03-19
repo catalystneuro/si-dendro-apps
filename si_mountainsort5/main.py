@@ -3,15 +3,15 @@
 from dendro.sdk import App, ProcessorBase
 from pydantic import Field
 from common.models import PipelineFullContext
-from common.models_sorting import Kilosort25SortingContext
+from common.models_sorting import MountainSort5SortingContext
 from common.processor_pipeline import run_pipeline
 
 
-app_name = 'si_kilosort25'
+app_name = 'si_mountainsort5'
 
 app = App(
     name=app_name,
-    description="Spike Interface Pipeline - Kilosort2.5",
+    description="Spike Interface Pipeline - Mountainsort 5",
     app_image=f"ghcr.io/catalystneuro/dendro_{app_name}",
     app_executable="/app/main.py"
 )
@@ -19,14 +19,14 @@ app = App(
 
 # We need to overwrite this with the specific sorter, to generate the correct forms
 class PipelineContext(PipelineFullContext):
-    sorter_name: str = 'kilosort25'
-    spikesorting_context: Kilosort25SortingContext = Field(default=Kilosort25SortingContext())
+    sorter_name: str = 'mountainsort5'
+    spikesorting_context: MountainSort5SortingContext = Field(default=MountainSort5SortingContext())
 
 
 class PipelineProcessor(ProcessorBase):
-    name = 'spikeinterface_pipeline_ks25'
-    label = 'SpikeInterface Pipeline - Kilosort 2.5'
-    description = "SpikeInterface Pipeline Processor for Kilosort 2.5"
+    name = 'spikeinterface_pipeline_mountainsort5'
+    label = 'SpikeInterface Pipeline - Mountainsort 5'
+    description = "SpikeInterface Pipeline Processor for Mountainsort 5"
     tags = ['spike_sorting', 'spike_sorter', 'spike_interface', 'electrophysiology', 'pipeline']
     attributes = {
         'wip': True

@@ -16,6 +16,7 @@ jobs:
         app_dir:
           - si_kilosort25
           - si_kilosort3
+          - si_mountainsort5
 
     steps:
       - name: Checkout repository
