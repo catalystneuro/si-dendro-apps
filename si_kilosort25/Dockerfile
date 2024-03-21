@@ -24,7 +24,7 @@ RUN git clone https://github.com/catalystneuro/neuroconv.git && \
 #     pip install -e .[full]
 
 # Install spikeinterface
-RUN pip install spikeinterface[full]==0.100.0
+RUN pip install spikeinterface[full]==0.100.2
 
 # Copy files into the container
 WORKDIR /app
