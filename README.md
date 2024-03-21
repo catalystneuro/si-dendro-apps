@@ -1,6 +1,5 @@
 # si-dendro-apps
-SpikeInterface Apps for Dendro
-
+SpikeInterface Apps for Dendro.
 
 ## Dev
 
