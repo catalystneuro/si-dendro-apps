@@ -1,11 +1,13 @@
 # https://api.dandiarchive.org/api/dandisets/000409/versions/draft/assets/c04f6b30-82bf-40e1-9210-34f0bcd8be24/
 input: https://dandiarchive.s3.amazonaws.com/blobs/2dd/3a3/2dd3a3b3-7ede-4f2b-a327-5c81bf5718da
 output: ./output/sorting_upload.nwb
+job_kwargs:
+  n_jobs: 0.7
 recording_context:
   electrical_series_path: /acquisition/ElectricalSeriesAp
   lazy_read_input: true
   stub_test: true
-  stub_test_duration_sec: 30
+  stub_test_duration_sec: 10
 run_preprocessing: true
 preprocessing_context:
   motion_correction:
