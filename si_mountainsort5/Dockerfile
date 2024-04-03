@@ -17,14 +17,20 @@ RUN git clone https://github.com/catalystneuro/neuroconv.git && \
     cd neuroconv && \
     pip install -e .
 
-# # Install spikeinterface from source, for now
-# RUN git clone https://github.com/SpikeInterface/spikeinterface.git && \
-#     cd spikeinterface && \
-#     # git checkout dev && \
-#     pip install -e .[full]
+# Install spikeinterface from source, for now
+RUN git clone https://github.com/SpikeInterface/spikeinterface.git && \
+    cd spikeinterface && \
+    # git checkout dev && \
+    pip install -e .[full]
+
+# Install mountainsort from source, for now
+RUN git clone https://github.com/flatironinstitute/mountainsort5.git && \
+    cd mountainsort5 && \
+    git checkout cached-chunk-size && \
+    pip install -e .
 
 # Install spikeinterface
-RUN pip install spikeinterface[full]==0.100.2
+# RUN pip install spikeinterface[full]==0.100.2
 
 # Copy files into the container
 WORKDIR /app
