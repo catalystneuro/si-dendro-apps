@@ -17,6 +17,7 @@ docker run --gpus all \
     -v /mnt/shared_storage/Github/si-dendro-apps/common:/app/common \
     -v /mnt/shared_storage/Github/dendro/python:/src/dendro/python \
     -v /mnt/shared_storage/Github/spikeinterface_pipelines:/src/spikeinterface_pipelines \
+    -v /mnt/shared_storage/Github/spikeinterface:/src/spikeinterface \
     -w /app \
     --entrypoint "$ENTRYPOINT_CMD" \
     $IMAGE \

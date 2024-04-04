@@ -23,6 +23,12 @@ RUN git clone https://github.com/catalystneuro/neuroconv.git && \
 #     # git checkout dev && \
 #     pip install -e .[full]
 
+# Install mountainsort from source, for now
+RUN git clone https://github.com/flatironinstitute/mountainsort5.git && \
+    cd mountainsort5 && \
+    git checkout cached-chunk-size && \
+    pip install -e .
+
 # Install spikeinterface
 RUN pip install spikeinterface[full]==0.100.2
 
