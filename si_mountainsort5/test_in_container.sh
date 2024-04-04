@@ -10,7 +10,9 @@ ARGS="test-app-processor --app-dir . --processor spikeinterface_pipeline_mountai
 
 # Run the Docker container, with conveninent volumes
 docker run --gpus all \
-    -v $(pwd)/results:/app/output \
+    -v $(pwd)/results/output:/app/output \
+    -v $(pwd)/results/results:/app/results \
+    -v $(pwd)/results/scratch:/app/scratch \
     -v $(pwd)/sample_context_1.yaml:/app/sample_context_1.yaml \
     -v /mnt/shared_storage/Github/si-dendro-apps/common:/app/common \
     -v /mnt/shared_storage/Github/dendro/python:/src/dendro/python \

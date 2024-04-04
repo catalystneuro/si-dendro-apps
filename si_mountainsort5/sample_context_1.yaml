@@ -7,7 +7,7 @@ recording_context:
   electrical_series_path: /acquisition/ElectricalSeriesAp
   lazy_read_input: true
   stub_test: true
-  stub_test_duration_sec: 1
+  stub_test_duration_sec: 30
 run_preprocessing: true
 preprocessing_context:
   motion_correction:
@@ -30,3 +30,5 @@ postprocessing_context:
     nearest_neighbor: false
     nn_isolation: false
     nn_noise_overlap: false
+run_curation: true
+run_visualization: true

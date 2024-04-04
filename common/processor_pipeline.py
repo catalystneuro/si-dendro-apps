@@ -105,6 +105,11 @@ def run_pipeline(context: PipelineFullContext):
 
     # Visualization params
     run_visualization = context.run_visualization
+    visualization_params = context.visualization_context.model_dump()
+    utp = visualization_params['sorting_summary'].pop('unit_table_properties', '')
+    visualization_params['sorting_summary']['unit_table_properties'] = [a.strip() for a in utp.split(',')]
+    lcs = visualization_params['sorting_summary'].pop('label_choices', '')
+    visualization_params['sorting_summary']['label_choices'] = [a.strip() for a in lcs.split(',')]
 
     # Run pipeline
     logger.info('Running pipeline')
@@ -117,13 +122,24 @@ def run_pipeline(context: PipelineFullContext):
         spikesorting_params=spikesorting_params,
         postprocessing_params=postprocessing_params,
         curation_params=curation_params,
-        # visualization_params=,
+        visualization_params=visualization_params,
         run_preprocessing=run_preprocessing,
         run_spikesorting=run_spikesorting,
         run_postprocessing=run_postprocessing,
         run_curation=run_curation,
         run_visualization=run_visualization
     )
+
+    # FOR TESTING ONLY, REMOVE LATER --------------------------------
+    # dump visualization output dict to json file, using json
+    if run_visualization:
+        import json
+        logger.info('Writing visualization output')
+        if not os.path.exists('output'):
+            os.mkdir('output')
+        with open('output/visualization_output.json', 'w') as f:
+            json.dump(visualization_output, f)
+    # ---------------------------------------------------------------
 
     # Upload output file
     if sorting:
