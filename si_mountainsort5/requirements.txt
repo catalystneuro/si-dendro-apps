@@ -1,5 +1,7 @@
 pynwb
 pyvips==2.2.2
-# spikeinterface[full]==0.100.2
+spikeinterface[full]==0.100.5
+mountainsort5==0.5.6
+neuroconv
 # spikeinterface_pipelines
 # dendro
