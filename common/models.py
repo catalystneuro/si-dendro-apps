@@ -27,6 +27,11 @@ class JobKwargs(BaseModel):
     n_jobs: float = Field(default=0.8, description='Number of jobs, must be a positive number between 0 and 1, or -1 for all processors.')
     chunk_duration: str = Field(default='1s', description='Chunk duration.')
     progress_bar: bool = Field(default=False, description='Show progress bar.')
+    mp_context: str = Field(
+        default="spawn",
+        description='Context for multiprocessing. It can be "fork" or "spawn".',
+        json_schema_extra={'options': ["fork", "spawn"]},
+    )
 
 
 # ------------------------------
