@@ -1,4 +1,4 @@
-FROM spikeinterface/mountainsort5-base:0.5.3
+FROM spikeinterface/mountainsort5-base:0.5.6
 
 # Copy files into the container
 WORKDIR /app
@@ -30,10 +30,9 @@ RUN git clone https://github.com/SpikeInterface/spikeinterface_pipelines.git && 
 #     pip install -e .
 
 # Install spikeinterface from source, for now
-RUN git clone https://github.com/alejoe91/spikeinterface && \
+RUN git clone https://github.com/SpikeInterface/spikeinterface && \
     cd spikeinterface && \
-    # git remote add alejoe91 https://github.com/alejoe91/spikeinterface && \
-    git checkout 0.100.5-ms5 && \
+    # git checkout 0.100.5-ms5 && \
     pip install -e .[full]
 
 # # Install mountainsort from source, for now
