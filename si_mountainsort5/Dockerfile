@@ -32,7 +32,7 @@ RUN git clone https://github.com/SpikeInterface/spikeinterface_pipelines.git && 
 # Install spikeinterface from source, for now
 RUN git clone https://github.com/SpikeInterface/spikeinterface && \
     cd spikeinterface && \
-    # git checkout 0.100.5-ms5 && \
+    git checkout 0.100-bug-fixes && \
     pip install -e .[full]
 
 # # Install mountainsort from source, for now
