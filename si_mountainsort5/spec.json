@@ -43,6 +43,16 @@
                     "default": false
                 },
                 {
+                    "name": "job_kwargs.mp_context",
+                    "description": "Context for multiprocessing. It can be \"fork\" or \"spawn\".",
+                    "type": "str",
+                    "default": "spawn",
+                    "options": [
+                        "fork",
+                        "spawn"
+                    ]
+                },
+                {
                     "name": "recording_context.electrical_series_path",
                     "description": "Path to the electrical series in the NWB file",
                     "type": "str"
@@ -70,6 +80,12 @@
                     "description": "Stub test duration in seconds",
                     "type": "float",
                     "default": 300
+                },
+                {
+                    "name": "recording_context.stub_test_num_channels",
+                    "description": "Stub test number of channels",
+                    "type": "int",
+                    "default": -1
                 },
                 {
                     "name": "run_preprocessing",
@@ -1515,6 +1531,125 @@
                     "description": "Run visualization",
                     "type": "bool",
                     "default": true
+                },
+                {
+                    "name": "visualization_context.recording.timeseries.n_snippets_per_segment",
+                    "description": "Number of snippets per segment to visualize.",
+                    "type": "int",
+                    "default": 2
+                },
+                {
+                    "name": "visualization_context.recording.timeseries.snippet_duration_s",
+                    "description": "Duration of each snippet in seconds.",
+                    "type": "float",
+                    "default": 0.5
+                },
+                {
+                    "name": "visualization_context.recording.timeseries.skip",
+                    "description": "Skip traces visualization.",
+                    "type": "bool",
+                    "default": false
+                },
+                {
+                    "name": "visualization_context.recording.drift.detection.peak_sign",
+                    "description": "Peak sign for peak detection.",
+                    "type": "str",
+                    "default": "neg",
+                    "options": [
+                        "neg",
+                        "pos",
+                        "both"
+                    ]
+                },
+                {
+                    "name": "visualization_context.recording.drift.detection.detect_threshold",
+                    "description": "Threshold for peak detection.",
+                    "type": "float",
+                    "default": 5.0
+                },
+                {
+                    "name": "visualization_context.recording.drift.detection.exclude_sweep_ms",
+                    "description": "Exclude sweep in ms around peak detection.",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "visualization_context.recording.drift.localization.ms_before",
+                    "description": "Time before peak in ms.",
+                    "type": "float",
+                    "default": 0.1
+                },
+                {
+                    "name": "visualization_context.recording.drift.localization.ms_after",
+                    "description": "Time after peak in ms.",
+                    "type": "float",
+                    "default": 0.3
+                },
+                {
+                    "name": "visualization_context.recording.drift.localization.radius_um",
+                    "description": "Radius in um for sparsifying waveforms before localization.",
+                    "type": "float",
+                    "default": 100.0
+                },
+                {
+                    "name": "visualization_context.recording.drift.decimation_factor",
+                    "description": "The decimation factor for drift visualization. E.g. 30 means that 1 out of 30 spikes is plotted.",
+                    "type": "int",
+                    "default": 30
+                },
+                {
+                    "name": "visualization_context.recording.drift.alpha",
+                    "description": "Alpha for scatter plot.",
+                    "type": "float",
+                    "default": 0.15
+                },
+                {
+                    "name": "visualization_context.recording.drift.vmin",
+                    "description": "Min value for colormap.",
+                    "type": "float",
+                    "default": -200
+                },
+                {
+                    "name": "visualization_context.recording.drift.vmax",
+                    "description": "Max value for colormap.",
+                    "type": "float",
+                    "default": 0
+                },
+                {
+                    "name": "visualization_context.recording.drift.cmap",
+                    "description": "Matplotlib colormap for drift visualization.",
+                    "type": "str",
+                    "default": "Greys_r"
+                },
+                {
+                    "name": "visualization_context.recording.label",
+                    "description": "Label for the recording.",
+                    "type": "str",
+                    "default": "Recording visualization from SI pipelines"
+                },
+                {
+                    "name": "visualization_context.sorting_summary.unit_table_properties",
+                    "description": "Comma-separated list of properties to show in the unit table.",
+                    "type": "str",
+                    "default": "default_qc"
+                },
+                {
+                    "name": "visualization_context.sorting_summary.curation",
+                    "description": "Whether to show curation buttons.",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "visualization_context.sorting_summary.label_choices",
+                    "description": "Comma-separated list of labels to choose from (if `curation=True`)",
+                    "type": "str",
+                    "default": "SUA, MUA, noise"
+                },
+                {
+                    "name": "visualization_context.sorting_summary.label",
+                    "description": "Label for the sorting summary.",
+                    "type": "str",
+                    "default": "Sorting summary from SI pipelines"
                 }
             ],
             "attributes": [
