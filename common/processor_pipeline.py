@@ -45,9 +45,14 @@ def run_pipeline(context: PipelineFullContext):
 
     if context.recording_context.stub_test:
         logger.info('Running in stub test mode')
+        # Limit the number of frames to the stub test duration
         stub_test_num_frames = context.recording_context.stub_test_duration_sec * recording.get_sampling_frequency()
         n_frames = int(min(stub_test_num_frames, recording.get_num_frames()))
         recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
+        # Limit the number of channels to the stub test range
+        channel_ids = recording.channel_ids
+        stub_test_channels_ids = [channel_ids[int(a)] for a in context.recording_context.stub_test_channels.split(',')]
+        recording = recording.channel_slice(channel_ids=stub_test_channels_ids)
 
     logger.info(recording)
 
