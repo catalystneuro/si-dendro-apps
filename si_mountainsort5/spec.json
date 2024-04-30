@@ -82,10 +82,10 @@
                     "default": 300
                 },
                 {
-                    "name": "recording_context.stub_test_num_channels",
-                    "description": "Stub test number of channels",
-                    "type": "int",
-                    "default": -1
+                    "name": "recording_context.stub_test_channels",
+                    "description": "Stub test comma-separated range of channels",
+                    "type": "str",
+                    "default": "1, 32"
                 },
                 {
                     "name": "run_preprocessing",
@@ -982,7 +982,7 @@
                     "name": "spikesorting_context.detect_threshold",
                     "description": "Threshold for spike detection",
                     "type": "float",
-                    "default": 5.5
+                    "default": 7
                 },
                 {
                     "name": "spikesorting_context.detect_sign",
@@ -1000,13 +1000,13 @@
                     "name": "spikesorting_context.snippet_T1",
                     "description": "Snippet T1",
                     "type": "int",
-                    "default": 20
+                    "default": 15
                 },
                 {
                     "name": "spikesorting_context.snippet_T2",
                     "description": "Snippet T2",
                     "type": "int",
-                    "default": 20
+                    "default": 35
                 },
                 {
                     "name": "spikesorting_context.npca_per_channel",
@@ -1018,13 +1018,13 @@
                     "name": "spikesorting_context.npca_per_subdivision",
                     "description": "Number of PCA per subdivision",
                     "type": "int",
-                    "default": 10
+                    "default": 3
                 },
                 {
                     "name": "spikesorting_context.snippet_mask_radius",
                     "description": "Snippet mask radius",
                     "type": "int",
-                    "default": 250
+                    "default": 30
                 },
                 {
                     "name": "spikesorting_context.scheme1_detect_channel_radius",
@@ -1036,13 +1036,13 @@
                     "name": "spikesorting_context.scheme2_phase1_detect_channel_radius",
                     "description": "Scheme 2 phase 1 detect channel radius",
                     "type": "int",
-                    "default": 200
+                    "default": 30
                 },
                 {
                     "name": "spikesorting_context.scheme2_detect_channel_radius",
                     "description": "Scheme 2 detect channel radius",
                     "type": "int",
-                    "default": 50
+                    "default": 30
                 },
                 {
                     "name": "spikesorting_context.scheme2_max_num_snippets_per_training_batch",
@@ -1054,7 +1054,7 @@
                     "name": "spikesorting_context.scheme2_training_duration_sec",
                     "description": "Scheme 2 training duration in seconds",
                     "type": "int",
-                    "default": 300
+                    "default": 150
                 },
                 {
                     "name": "spikesorting_context.scheme2_training_recording_sampling_mode",
