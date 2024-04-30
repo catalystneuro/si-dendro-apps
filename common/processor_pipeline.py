@@ -51,7 +51,8 @@ def run_pipeline(context: PipelineFullContext):
         recording = recording.frame_slice(start_frame=0, end_frame=n_frames)
         # Limit the number of channels to the stub test range
         channel_ids = recording.channel_ids
-        stub_test_channels_ids = [channel_ids[int(a)] for a in context.recording_context.stub_test_channels.split(',')]
+        start, end = context.recording_context.stub_test_channels.split(',')
+        stub_test_channels_ids = [channel_ids[a] for a in range(int(start), int(end))]
         recording = recording.channel_slice(channel_ids=stub_test_channels_ids)
 
     logger.info(recording)
