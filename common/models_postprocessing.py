@@ -95,6 +95,7 @@ class QMParams(BaseModel):
 
 
 class QualityMetrics(BaseModel):
+    firing_rate: bool = Field(default=True, description="Firing rate.")
     presence_ratio: bool = Field(default=True, description="Presence ratio.")
     snr: bool = Field(default=True, description="Signal to noise ratio.")
     isi_violation: bool = Field(default=True, description="ISI violation.")

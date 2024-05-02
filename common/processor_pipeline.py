@@ -89,6 +89,7 @@ def run_pipeline(context: PipelineFullContext):
     postprocessing_params = context.postprocessing_context.model_dump()
     qm_list = list()
     qm_names = [
+        'firing_rate',
         'presence_ratio',
         'snr',
         'isi_violation',
