@@ -20,7 +20,7 @@ class RecordingContext(BaseModel):
     write_recording: bool = Field(default=False, description='Write recording')
     stub_test: bool = Field(default=False, description='Stub test')
     stub_test_duration_sec: float = Field(default=300, description='Stub test duration in seconds')
-    stub_test_channels: str = Field(default="0, 31", description='Stub test comma-separated range of channels')
+    stub_test_channels: str = Field(default="0, 32", description='Stub test comma-separated range of channels')
 
 
 class JobKwargs(BaseModel):

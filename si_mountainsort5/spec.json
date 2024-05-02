@@ -85,7 +85,7 @@
                     "name": "recording_context.stub_test_channels",
                     "description": "Stub test comma-separated range of channels",
                     "type": "str",
-                    "default": "1, 32"
+                    "default": "0, 32"
                 },
                 {
                     "name": "run_preprocessing",
@@ -1250,6 +1250,12 @@
                 {
                     "name": "postprocessing_context.principal_components.whiten",
                     "description": "Whiten the components",
+                    "type": "bool",
+                    "default": true
+                },
+                {
+                    "name": "postprocessing_context.quality_metrics.firing_rate",
+                    "description": "Firing rate.",
                     "type": "bool",
                     "default": true
                 },
