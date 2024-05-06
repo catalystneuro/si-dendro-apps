@@ -36,12 +36,17 @@ def run_pipeline(context: PipelineFullContext):
     ff = context.input.get_file(download=download)
 
     logger.info('Creating input recording')
-    recording = NwbRecordingExtractor(
-        file=ff,
-        electrical_series_path=context.recording_context.electrical_series_path,
-        # file_path=context.input.get_url(),
-        # stream_mode="remfile"
-    )
+    if download:
+        source_file_path = context.input.local_file_name
+        recording = NwbRecordingExtractor(
+            file_path=source_file_path,
+            electrical_series_path=context.recording_context.electrical_series_path,
+        )
+    else:
+        recording = NwbRecordingExtractor(
+            file=ff,
+            electrical_series_path=context.recording_context.electrical_series_path,
+        )
 
     if context.recording_context.stub_test:
         logger.info('Running in stub test mode')
@@ -156,10 +161,20 @@ def run_pipeline(context: PipelineFullContext):
 
         output_fname = 'output/output.nwb'
 
-        h5_file = h5py.File(ff, 'r')
-        with pynwb.NWBHDF5IO(file=h5_file, mode='r', load_namespaces=True) as io:
+        if download:
+            nwbhdf5io_kwargs = {
+                'path': source_file_path,
+                'mode': 'r',
+                'load_namespaces': True
+            }
+        else:
+            nwbhdf5io_kwargs = {
+                'file': h5py.File(ff, 'r'),
+                'mode': 'r',
+                'load_namespaces': True
+            }
+        with pynwb.NWBHDF5IO(**nwbhdf5io_kwargs) as io:
             nwbfile_rec = io.read()
-
             nwbfile_base = create_base_nwb_file(nwbfile_original=nwbfile_rec)
 
         if waveform_extractor is not None:

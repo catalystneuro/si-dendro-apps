@@ -10,6 +10,7 @@ ARGS="test-app-processor --app-dir . --processor spikeinterface_pipeline_mountai
 
 # Run the Docker container, with conveninent volumes
 docker run --gpus all \
+    -v $(pwd)/tmp:/tmp \
     -v $(pwd)/results/output:/app/output \
     -v $(pwd)/results/results:/app/results \
     -v $(pwd)/results/scratch:/app/scratch \
@@ -17,8 +18,9 @@ docker run --gpus all \
     -v /mnt/shared_storage/Github/si-dendro-apps/common:/app/common \
     -v /mnt/shared_storage/Github/dendro/python:/src/dendro/python \
     -v /mnt/shared_storage/Github/spikeinterface_pipelines:/src/spikeinterface_pipelines \
-    -v /mnt/shared_storage/Github/spikeinterface:/src/spikeinterface \
     -w /app \
     --entrypoint "$ENTRYPOINT_CMD" \
     $IMAGE \
     $ARGS
+
+# -v /mnt/shared_storage/Github/spikeinterface:/src/spikeinterface \
